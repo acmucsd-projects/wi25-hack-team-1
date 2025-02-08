@@ -2,14 +2,17 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import connectDB from "./database";
 import { z } from "zod";
+import cors = require("cors");
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
+
 app.get("/", (req: Request, res: Response) => {
-  res.send("Our Server");
+  res.send("Some Server");
 });
 
 app.listen(port, () => {
