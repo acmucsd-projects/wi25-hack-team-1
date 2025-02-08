@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import connectDB from "./database";
+import { z } from "zod";
 
 dotenv.config();
 
@@ -16,3 +17,8 @@ app.listen(port, () => {
 });
 
 connectDB();
+
+const envSchema = z.object({
+  MONGODB_URI: z.string().url(),
+  PORT: z.string().default("3000"),
+});
