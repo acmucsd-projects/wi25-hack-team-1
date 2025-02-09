@@ -1,6 +1,6 @@
-import React from 'react';
+import { Outlet } from "react-router-dom";
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout = () => {
   return (
     <div>
       <header>
@@ -9,7 +9,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {/* Add navigation links here */}
         </nav>
       </header>
-      <main>{children}</main>
+      <main><Outlet /></main>
       <footer>
         <p>© 2023 My App. All rights reserved.</p>
       </footer>
