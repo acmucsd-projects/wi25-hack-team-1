@@ -4,7 +4,7 @@ dotenv.config();
 
 import connectDB from "./database";
 import env from "./utils/validateEnv";
-import cors = require("cors");
+import cors from "cors";
 
 const app: Express = express();
 const port = env.PORT || 3000;
