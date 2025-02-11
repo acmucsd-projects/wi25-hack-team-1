@@ -11,12 +11,12 @@ const port = env.PORT || 3000;
 
 app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Some Server");
-});
-
 connectDB();
 
+app.get("/", (req: Request, res: Response) => {
+    res.send("Some Server");
+});
+
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+    console.log(`[server]: Server is running at http://localhost:${port}`);
 });
