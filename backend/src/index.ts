@@ -14,9 +14,9 @@ app.use(cors());
 connectDB();
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Some Server");
+  res.send("Some Server");
 });
 
 app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`[server]: Server is running at http://localhost:${port}`);
 });
