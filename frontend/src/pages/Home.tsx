@@ -5,6 +5,8 @@ const Home: React.FC = () => {
     <div>
       <h1>Welcome to the Home Page</h1>
       <p>This is a temporary home page.</p>
+     
+
     </div>
   );
 };

@@ -7,12 +7,19 @@ const Navbar: React.FC = () => {
   return (
     <nav className={ styles.navbar }>
       <ul className={ styles.list}>
-        <li className={ styles.listOfLinks}>
+
+        <li>
           <Link to="/">Home</Link>
         </li>
-        <li className={ styles.listOfLinks}>
+
+        <li>
           <Link to="/login">Login</Link>
         </li>
+
+        <li className={ styles.button }>
+          <button onClick={() => alert('Button clicked!')}>Google Authentication</button>
+        </li>
+
       </ul>
     </nav>
   );

@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #333;
+    background-color: #ff9100;
     padding: 1rem;
   }
   
@@ -10,18 +10,34 @@
     margin: 0;
     padding: 0;
   }
-  
-.listOfLinks {
-    margin: 0;
+
+  .list li {
+    display: inline;
   }
   
-.listOfLinks e {
+  .list a {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
+  }
+
+  .list a:hover{
+
   }
   
-  .listOfLinks e:hover {
-    background-color: #555;
+  .button {
+    background-color: blue;
+    color: white;
+    padding: 4px 4px;
+    border: green;
+    border-radius: 10px;
+    cursor: pointer;
   }
+  
+  .button:hover {
+    background-color: darkblue;
+  }
+  
+
+
+  
+ 
