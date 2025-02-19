@@ -1,9 +1,9 @@
-nav {
+.navbar {
     background-color: #333;
     padding: 1rem;
   }
   
-  nav ul {
+.list {
     list-style: none;
     display: flex;
     justify-content: space-around;
@@ -11,17 +11,17 @@ nav {
     padding: 0;
   }
   
-  nav ul li {
+.listOfLinks {
     margin: 0;
   }
   
-  nav ul li a {
+.listOfLinks e {
     color: white;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: background-color 0.3s;
   }
   
-  nav ul li a:hover {
+  .listOfLinks e:hover {
     background-color: #555;
   }

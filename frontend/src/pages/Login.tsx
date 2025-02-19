@@ -1,7 +1,7 @@
 // filepath: /c:/Users/maxim/Desktop/wi25-hack-team-1/frontend/src/pages/Login.tsx
 import React, { useState } from "react";
-import "@/index.css";
 
+// login page component
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,5 +42,7 @@ const Login: React.FC = () => {
     </div>
   );
 };
+
+
 
 export default Login;
