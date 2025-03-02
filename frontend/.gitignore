@@ -32,3 +32,5 @@ dist-ssr
 # Ignore API keys or password files
 *.key
 *.password
+
+.eslintcache
