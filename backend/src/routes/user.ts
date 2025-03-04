@@ -1,7 +1,7 @@
 import express, { NextFunction, Response } from "express";
 
-import { LoginRequest, verifyAuthToken } from "../middleware/auth";
-import User from "../models/user";
+import { LoginRequest, verifyAuthToken } from "@middleware/auth";
+import User from "@models/user";
 
 const router = express.Router();
 
