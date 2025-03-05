@@ -2,8 +2,8 @@ import "dotenv/config";
 import "module-alias/register";
 import express, { Express, Request, Response } from "express";
 
-import connectDB from "./services/database";
-import env from "./utils/validateEnv";
+import connectDB from "@/services/database";
+import env from "@/utils/validateEnv";
 import cors from "cors";
 import { userRouter } from "@/routes/user";
 
