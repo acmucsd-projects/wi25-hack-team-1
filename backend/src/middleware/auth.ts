@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { firebaseAuth } from "../services/firebase";
 
-export type LoginRequest = {
+export type RydeRequest = {
   userId?: string;
 } & Request;
 
 const verifyAuthToken = async (
-  req: LoginRequest,
+  req: RydeRequest,
   res: Response,
   next: NextFunction,
 ) => {

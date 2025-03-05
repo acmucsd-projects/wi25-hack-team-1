@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "_moduleAliases": {
+    "@": "src"
+  },
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
@@ -25,6 +28,7 @@
     "express-validator": "^7.2.1",
     "firebase-admin": "^13.1.0",
     "http-errors": "^2.0.0",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.10.0",
     "zod": "^3.24.1"
   },
@@ -32,7 +36,6 @@
     "@eslint/js": "^9.20.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "@types/express-validator": "^2.20.33",
     "@types/http-errors": "^2.0.4",
     "@types/node": "^22.13.1",
     "@typescript-eslint/eslint-plugin": "^8.23.0",

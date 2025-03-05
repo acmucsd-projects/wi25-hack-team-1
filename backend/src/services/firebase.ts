@@ -8,7 +8,10 @@ let serviceAccountKey: firebase.ServiceAccount;
 if (!env.SERVICE_ACCOUNT_KEY) {
   throw new Error("Missing service account key");
 } else {
-  serviceAccountKey = env.SERVICE_ACCOUNT_KEY as firebase.ServiceAccount;
+  serviceAccountKey = JSON.parse(
+    env.SERVICE_ACCOUNT_KEY,
+  ) as firebase.ServiceAccount;
+  console.log(serviceAccountKey);
 }
 
 firebase.initializeApp({
