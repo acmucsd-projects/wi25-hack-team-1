@@ -7,6 +7,6 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UserContextProvider>
       <App />
-      </UserContextProvider>
+    </UserContextProvider>
   </StrictMode>,
 );
