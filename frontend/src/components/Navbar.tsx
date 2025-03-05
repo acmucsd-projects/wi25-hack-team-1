@@ -12,7 +12,8 @@ const Navbar: React.FC = () => {
   return (
     <nav className={ styles.navbar }>
       <ul className={ styles.list}>
-        <li className={ styles.listOfLinks}>
+
+        <li>
           <Link to="/">Home</Link>
         </li>
         <div> 

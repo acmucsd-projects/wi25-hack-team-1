@@ -1,5 +1,7 @@
 // filepath: /c:/Users/maxim/Desktop/wi25-hack-team-1/frontend/src/pages/Login.tsx
 import React, { useState } from "react";
+import styles from "./Login.module.css";
+import { Link } from "react-router-dom";
 
 // login page component
 const Login: React.FC = () => {
@@ -14,35 +16,38 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome to the Login Page</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+    <div className={styles.container}>
+      <h1>Login to Rydeshare</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="email" className={styles.label}>Email:</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className={styles.inputGroup}>
+          <label htmlFor="password" className={styles.label}>Password:</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className={styles.button}>Login</button>
+        <p className={styles.registerText}>
+          If you don't have an account, <Link to="/register">Register here</Link>
+        </p>   
       </form>
     </div>
   );
 };
-
-
 
 export default Login;
