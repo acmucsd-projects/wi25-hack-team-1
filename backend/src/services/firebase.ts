@@ -1,7 +1,7 @@
 import * as firebase from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 
-import env from "../utils/validateEnv";
+import env from "@/utils/validateEnv";
 
 let serviceAccountKey: firebase.ServiceAccount;
 

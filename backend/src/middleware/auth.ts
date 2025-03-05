@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { firebaseAuth } from "../services/firebase";
+import { firebaseAuth } from "@/services/firebase";
 
 export type RydeRequest = {
   userId?: string;
