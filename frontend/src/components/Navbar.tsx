@@ -18,25 +18,27 @@ const Navbar: React.FC = () => {
         <li>
           <Link to="/">Home</Link>
         </li>
-          {firebaseUser ? (
-            <div className={styles.loginContainer}>
-              <button type="button" className={styles.googleButton} onClick={signOutUser}>
-              <img src={signOut} alt="Google logo" width="20" height="20" />
-              
-              </button>
-              <p>Welcome, {firebaseUser.email}!</p>
-            </div>
-
-          ) : (
-            <div className={styles.loginContainer}>
-              <button type="button" className={styles.googleButton} onClick={signInWithGooglePopup}>
-                <img src={googleLogo} alt="Google logo" width="20" height="20" />
-                Sign in to Google
-              </button>
-              <p>Please sign in with a @ucsd.edu account</p>
-            </div>
-          )}
       </ul>
+      <div className={styles.list_right}>
+        {firebaseUser ? (
+          <div className={styles.loginContainer}>
+            <p>Welcome, {firebaseUser.email}!</p>
+            <button type="button" className={styles.googleButton} onClick={signOutUser}>
+              <img src={signOut} alt="Google logo" width="20" height="20" />
+            </button>
+          </div>
+
+        ) : (
+          <div className={styles.loginContainer}>
+            <p>Please sign in with a @ucsd.edu account</p>
+            <button type="button" className={styles.googleButton} onClick={signInWithGooglePopup}>
+              <img src={googleLogo} alt="Google logo" width="20" height="20" />
+              Sign in to Google
+            </button>
+          </div>
+        )}
+      </div>
+      
     </nav>
   );
 };
