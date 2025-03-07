@@ -11,7 +11,6 @@ if (!env.SERVICE_ACCOUNT_KEY) {
   serviceAccountKey = JSON.parse(
     env.SERVICE_ACCOUNT_KEY,
   ) as firebase.ServiceAccount;
-  console.log(serviceAccountKey);
 }
 
 firebase.initializeApp({

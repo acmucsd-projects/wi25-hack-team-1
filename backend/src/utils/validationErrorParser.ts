@@ -10,15 +10,8 @@ import createHttpError from "http-errors";
  */
 const validationErrorParser = (errors: Result<ValidationError>) => {
   if (!errors.isEmpty()) {
-    let errorString = "";
-
-    // parse through errors returned by the validator and append them to the error string
-    for (const error of errors.array()) {
-      errorString += error.msg + " ";
-    }
-
     // trim removes the trailing space created in the for loop
-    throw createHttpError(400, errorString.trim());
+    throw createHttpError(400, errors.array()[0].msg.trim());
   }
 };
 
