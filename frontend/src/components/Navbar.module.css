@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  background: linear-gradient(75deg, #4e54c8 70%, #8f94fb);
+  background: #0091ff;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -52,14 +52,15 @@ body {
 .googleButton {
   display: flex;
   align-items: center;
-  background-color: white;
-  color: #444;
-  border: 1px solid #ddd;
+  background-color: rgb(27, 21, 21);
+  border: none;
+  color: #ffffff;
   border-radius: 20px;
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
+
 }
 
 .googleButton img {
@@ -67,6 +68,5 @@ body {
 }
 
 .googleButton:hover {
-  background-color: #f7f7f7;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #2f2828;
 }

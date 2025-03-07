@@ -2,15 +2,15 @@
 import React, { createContext, useState, useEffect } from "react";
 import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
 import { auth } from "./config";
-// 1. Define the shape of your context's data
+// Define the shape of your context's data
 type UserContextType = {
   firebaseUser: FirebaseUser | null;
 };
-// 2. Create the context with a default value
+// Create the context with a default value
 export const UserContext = createContext<UserContextType>({
   firebaseUser: null,
 });
-// 3. Provide the context to the rest of the app
+// Provide the context to the rest of the app
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {

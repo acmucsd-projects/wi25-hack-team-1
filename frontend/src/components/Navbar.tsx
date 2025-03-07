@@ -1,12 +1,12 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import {signOutUser} from "@/firebase/auth_sign_out";
-import {signInWithGooglePopup} from "@/firebase/auth_google_signin_popup";
+import {signOutUser, signInWithGooglePopup} from "@/firebase/auth_google";
 import { UserContext } from "@/firebase/UserContext";
 import styles from "@/components/Navbar.module.css";
-import { useContext } from "react";
-import googleLogo from "@/assets/googleLogo.png"; // Adjust the path as necessary
+import googleLogo from "@/assets/google-icon.svg"; // Adjust the path as necessary
 import signOut from "@/assets/signOut.png"; // Adjust the path as necessary
+
 const Navbar: React.FC = () => {
   const { firebaseUser } = useContext(UserContext);
 
