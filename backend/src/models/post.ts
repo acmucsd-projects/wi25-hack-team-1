@@ -11,11 +11,11 @@ const postSchema = new Schema(
     // Ex: firstName, lastName, university, email, etc.
     creatorId: { type: Types.ObjectId, ref: "User", required: true },
     flightDay: { type: Date, required: true },
-    time: { type: Date, required: true },               // Desired time to BE at Airport.
+    time: { type: Date, required: true },                // Desired time to BE at Airport.
     airport: { type: String, required: true },
     luggage: { type: luggageSchema, required: true },
-    numPassengers: { type: Number, required: true },
-    fulfilled: { type: Boolean, default: false },        // Has this ride been matched?
+    numPassengers: { type: Number, required: true },     // Total capacity of ride (Seeking this many passengers)
+    passengers: [{ type: Types.ObjectId, ref: "User" }], // Array of users in the ride
   },
   { timestamps: true },
 );
