@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Selector.module.css';
 
 interface SelectorProps {
@@ -10,6 +10,7 @@ interface SelectorProps {
 const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSelect = true }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Ref to track the dropdown container
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -33,8 +34,22 @@ const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSel
 
   const isOptionSelected = (option: string) => selectedOptions.includes(option);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={styles.selectorContainer}>
+    <div className={styles.selectorContainer} ref={dropdownRef}>
       {/* Button to toggle dropdown */}
       <button onClick={toggleDropdown} className={styles.dropdownButton}>
         Filter Options
@@ -48,9 +63,9 @@ const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSel
               <label>
                 <input
                   type={isMultiSelect ? 'checkbox' : 'radio'} // Use checkbox for multi-select, radio for single-select
-                  name={!isMultiSelect ? 'single-select' : undefined} // Group radio buttons for single-select                  checked={isOptionSelected(option)}
+                  name={!isMultiSelect ? 'single-select' : undefined} // Group radio buttons for single-select
+                  checked={isOptionSelected(option)}
                   onChange={() => handleOptionToggle(option)}
-                  disabled={!isMultiSelect && isOptionSelected(option)} // Disable checkbox for single-select after selection
                 />
                 {option}
               </label>

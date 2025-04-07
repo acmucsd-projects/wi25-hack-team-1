@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         isMultiSelect={true}
       />
       {multiSelectOptions.length > 0 && (
-        <p>Currently selected (multi-select): {multiSelectOptions.join(', ')}</p>
+        <p>Currently selected (multi-select): {multiSelectOptions.sort().join(', ')}</p>
       )}
 
       {/* Single-select example */}
