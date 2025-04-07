@@ -14,10 +14,13 @@
     "prepare": "cd .. && husky"
   },
   "dependencies": {
+    "baseui": "^0.0.0-next-2113e1821",
     "firebase": "^11.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.5"
+    "react-router-dom": "^7.1.5",
+    "styletron-engine-monolithic": "^1.0.0",
+    "styletron-react": "^6.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
