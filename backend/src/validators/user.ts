@@ -1,10 +1,16 @@
 import { body } from "express-validator";
 
-const nameValidator = body("name")
+const firstNameValidator = body("firstName")
   .exists()
-  .withMessage("name must exist")
+  .withMessage("firstName must exist")
   .isString()
-  .withMessage("name must be a string");
+  .withMessage("firstName must be a string");
+
+const lastNameValidator = body("lastName")
+  .exists()
+  .withMessage("lastName must exist")
+  .isString()
+  .withMessage("lastName must be a string");
 
 const uniValidator = body("uni")
   .optional()
@@ -32,7 +38,8 @@ const genderValidator = body("gender")
 
 // establishes a set of rules that the body of the task creation route must follow
 export const createUserValidator = [
-  nameValidator,
+  firstNameValidator,
+  lastNameValidator,
   uniValidator,
   emailValidator,
   phoneValidator,

@@ -41,11 +41,13 @@ router.get(
  *
  * Create a new user
  *
- * @apiParam {String} name
+ * @apiParam {String} firstName
+ * @apiParam {String} lastName
  * @apiParam {String} uni
  * @apiParam {String} email
  * @apiParam {String} phoneNumber
  * @apiParam {String} gender
+ * @apiParam {String} photoURL
  */
 router.post(
   "/",
@@ -61,15 +63,18 @@ router.post(
       // if there are errors, then this function throws an exception
       validationErrorParser(errors);
 
-      const { name, uni, email, phone, gender } = matchedData(req);
+      const { firstName, lastName, uni, email, phone, gender, photoURL } =
+        matchedData(req);
 
       const user = new User({
         uid: req.userId,
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
         uni: uni,
         email: email,
         phone: phone,
         gender: gender,
+        photoURL: photoURL,
       });
 
       const newUser = await user.save();
