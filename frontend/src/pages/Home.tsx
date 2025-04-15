@@ -1,10 +1,14 @@
-import React from "react";
+import React from 'react';
+import Card from '@/components/PostCard';
+import FilterBar from '@/components/FilterBar';
+
 
 const Home: React.FC = () => {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <p>This is a temporary home page.</p>
+      <FilterBar />
+      <Card/>
     </div>
   );
 };

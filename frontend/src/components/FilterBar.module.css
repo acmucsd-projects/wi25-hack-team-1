@@ -1,0 +1,8 @@
+.sortContainer {
+  display: flex;
+  gap: 20px; /* Space between the boxes */
+  justify-content: center;
+  width: 60%;
+  margin: 0 auto; /* Center the sort container */
+}
+
