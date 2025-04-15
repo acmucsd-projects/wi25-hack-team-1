@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './Selector.module.css';
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Selector.module.css";
 
 interface SelectorProps {
   options: string[];
@@ -7,7 +7,11 @@ interface SelectorProps {
   isMultiSelect?: boolean; // Determines if the selector is multi-select or single-select
 }
 
-const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSelect = true }) => {
+const Selector: React.FC<SelectorProps> = ({
+  options,
+  onFilterChange,
+  isMultiSelect = true,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref to track the dropdown container
@@ -37,14 +41,17 @@ const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSel
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -62,8 +69,8 @@ const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, isMultiSel
             <div key={option} className={styles.dropdownItem}>
               <label>
                 <input
-                  type={isMultiSelect ? 'checkbox' : 'radio'} // Use checkbox for multi-select, radio for single-select
-                  name={!isMultiSelect ? 'single-select' : undefined} // Group radio buttons for single-select
+                  type={isMultiSelect ? "checkbox" : "radio"} // Use checkbox for multi-select, radio for single-select
+                  name={!isMultiSelect ? "single-select" : undefined} // Group radio buttons for single-select
                   checked={isOptionSelected(option)}
                   onChange={() => handleOptionToggle(option)}
                 />

@@ -20,7 +20,9 @@ const Login: React.FC = () => {
       <h1>Login to Rydeshare</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <label htmlFor="email" className={styles.label}>Email:</label>
+          <label htmlFor="email" className={styles.label}>
+            Email:
+          </label>
           <input
             type="email"
             id="email"
@@ -31,7 +33,9 @@ const Login: React.FC = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="password" className={styles.label}>Password:</label>
+          <label htmlFor="password" className={styles.label}>
+            Password:
+          </label>
           <input
             type="password"
             id="password"
@@ -41,10 +45,13 @@ const Login: React.FC = () => {
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>Login</button>
+        <button type="submit" className={styles.button}>
+          Login
+        </button>
         <p className={styles.registerText}>
-          If you don't have an account, <Link to="/register">Register here</Link>
-        </p>   
+          If you don't have an account,{" "}
+          <Link to="/register">Register here</Link>
+        </p>
       </form>
     </div>
   );

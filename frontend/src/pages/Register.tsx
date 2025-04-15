@@ -9,7 +9,7 @@ const Register: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if(password !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Passwords do not match");
     }
     // Handle login logic here
@@ -19,12 +19,14 @@ const Register: React.FC = () => {
     console.log("Confirm Password:", confirmPassword);
   };
 
-return(
+  return (
     <div className={styles.container}>
       <h1>Sign up to Rydeshare</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <label htmlFor="Name" className={styles.label}>Name:</label>
+          <label htmlFor="Name" className={styles.label}>
+            Name:
+          </label>
           <input
             id="Name"
             value={name}
@@ -34,7 +36,9 @@ return(
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="email" className={styles.label}>Email:</label>
+          <label htmlFor="email" className={styles.label}>
+            Email:
+          </label>
           <input
             type="email"
             id="email"
@@ -45,7 +49,9 @@ return(
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="password" className={styles.label}>Password:</label>
+          <label htmlFor="password" className={styles.label}>
+            Password:
+          </label>
           <input
             type="password"
             id="password"
@@ -56,7 +62,9 @@ return(
           />
         </div>
         <div className={styles.inputGroup}>
-          <label htmlFor="confirmPassword" className={styles.label}>Confirm Password:</label>
+          <label htmlFor="confirmPassword" className={styles.label}>
+            Confirm Password:
+          </label>
           <input
             type="password"
             id="confirmPassword"
@@ -66,12 +74,12 @@ return(
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>Login</button>
+        <button type="submit" className={styles.button}>
+          Login
+        </button>
       </form>
     </div>
-);
+  );
 };
-
-
 
 export default Register;

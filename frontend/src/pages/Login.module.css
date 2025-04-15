@@ -4,11 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(
-    65deg,
-    #ffffff86,
-    #ff7300
-  );
+  background: linear-gradient(65deg, #ffffff86, #ff7300);
 }
 
 .form {
@@ -51,17 +47,17 @@
 }
 
 .registerText {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: #333;
-    text-align: center;
-  }
-  
-  .registerText a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .registerText a:hover {
-    text-decoration: underline;
-  }
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.registerText a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.registerText a:hover {
+  text-decoration: underline;
+}

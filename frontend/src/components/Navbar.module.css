@@ -11,7 +11,6 @@ body {
   align-items: center;
 }
 
-
 .list {
   list-style: none;
   display: flex;
@@ -28,7 +27,9 @@ body {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   border-radius: 5px;
 }
 
@@ -42,7 +43,6 @@ body {
   align-items: center;
   margin-left: auto; /* Push the list_right container to the right */
 }
-
 
 .loginContainer {
   display: flex;
@@ -59,8 +59,9 @@ body {
   padding: 0.5rem 0.5rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .googleButton img {
