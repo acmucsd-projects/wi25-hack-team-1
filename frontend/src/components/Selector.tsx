@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './Selector.module.css';
-import { Button } from 'baseui/button';
-import { Checkbox, LABEL_PLACEMENT } from 'baseui/checkbox';
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Selector.module.css";
+import { Button } from "baseui/button";
+import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
 
 interface SelectorProps {
   options: string[];
@@ -9,7 +9,11 @@ interface SelectorProps {
   buttonLabel?: string; // Custom label for the button
 }
 
-const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, buttonLabel = 'Filter Options' }) => {
+const Selector: React.FC<SelectorProps> = ({
+  options,
+  onFilterChange,
+  buttonLabel = "Filter Options",
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref to track the dropdown container
@@ -32,14 +36,17 @@ const Selector: React.FC<SelectorProps> = ({ options, onFilterChange, buttonLabe
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 

@@ -5,9 +5,7 @@ import Layout from "@/components/Layout";
 import Login from "@/pages/Login";
 import { Client as Styletron } from "styletron-engine-monolithic";
 import { Provider as StyletronProvider } from "styletron-react";
-import { LightTheme, BaseProvider} from "baseui";
-
-
+import { LightTheme, BaseProvider } from "baseui";
 
 const App: React.FC = () => {
   const engine = new Styletron();
@@ -18,14 +16,13 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </BaseProvider>
+              <Route path="/login" element={<Login />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </BaseProvider>
     </StyletronProvider>
   );
 };
 
 export default App;
-
