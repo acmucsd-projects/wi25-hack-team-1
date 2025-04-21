@@ -4,5 +4,6 @@
   justify-content: center;
   width: 60%;
   margin: 0 auto; /* Center the sort container */
+  align-items: center; /* Center items vertically */
 }
 
