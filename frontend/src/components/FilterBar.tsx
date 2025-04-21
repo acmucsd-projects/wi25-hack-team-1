@@ -4,23 +4,32 @@ import { Select } from "baseui/select";
 import styles from "@/components/FilterBar.module.css";
 import Selector from "@/components/Selector";
 import { TimePicker } from "baseui/timepicker";
+import { Button } from "baseui/button";
 
-const FilterBar: React.FC = () => {
+interface FilterBarProps {
+  onSubmit: (filters: {
+    date: Date | Date[] | (Date | null | undefined)[] | null | undefined;
+    time: Date;
+    departure: string[];
+    destination: string[];
+    gender: string[];
+  }) => void;
+}
+
+const FilterBar = ({ onSubmit }: FilterBarProps) => {
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
   >([new Date()]);
-  const [departure, setDeparture] = React.useState<
-    { id: string; label: string }[]
-  >([]);
+
   const [destination, setDestination] = React.useState<
     { id: string; label: string }[]
   >([]);
 
+  const [departure, setDeparture] = React.useState<string[]>([]); // Updated to store selected gender options
+
   const [gender, setGender] = React.useState<string[]>([]); // Updated to store selected gender options
 
-  const [value, setValue] = React.useState(
-    new Date("2025-04-14T20:21:36.050Z"),
-  );
+  const [time, setTime] = React.useState(new Date("2025-04-14T20:21:36.050Z"));
 
   const handleGenderChange = (selected: string[]) => {
     setGender(selected); // Update the state with the selected gender options
@@ -38,35 +47,32 @@ const FilterBar: React.FC = () => {
       />
 
       <TimePicker
-        value={value}
+        value={time}
         onChange={(date) => {
-          if (date) setValue(date);
+          if (date) setTime(date);
         }}
         minTime={new Date("2025-04-14T07:00:00.000Z")}
       />
 
-      <Select
+      <Selector
         options={[
-          { label: "Revelle", id: "#F0F8FF" },
-          { label: "Muir", id: "#FAEBD7" },
-          { label: "Marshall", id: "#00FFFF" },
-          { label: "Warren", id: "#7FFFD4" },
-          { label: "Roosevelt", id: "#F0FFFF" },
-          { label: "Sixth", id: "#F5F5DC" },
-          { label: "Seventh", id: "#F0FFFF" },
-          { label: "Eighth", id: "#F5F5DC" },
+          "Revelle",
+          "Muir",
+          "Marshall",
+          "Warren",
+          "Roosevelt",
+          "Sixth",
+          "Seventh",
+          "Eighth",
         ]}
-        value={departure}
-        placeholder="Departure"
-        onChange={(params) =>
-          setDeparture(params.value as { id: string; label: string }[])
-        }
+        onFilterChange={setDeparture} // Pass the callback to handle gender selection
+        buttonLabel="Departure"
       />
 
       <Select
         options={[
-          { label: "San Diego (SAN)", id: "#F0F8FF" },
-          { label: "Los Angeles (LAX)", id: "#FAEBD7" },
+          { label: "San Diego (SAN)", id: "1" },
+          { label: "Los Angeles (LAX)", id: "2" },
         ]}
         value={destination}
         placeholder="Destination"
@@ -81,8 +87,21 @@ const FilterBar: React.FC = () => {
         buttonLabel="Gender"
       />
 
-      {/* Display the selected gender options */}
-      {gender.length > 0 && <p>Selected Gender: {gender.join(", ")}</p>}
+      <Button
+        onClick={() => {
+          onSubmit({
+            date,
+            departure,
+            destination: destination.map((el) => {
+              return el.label;
+            }),
+            gender,
+            time,
+          });
+        }}
+      >
+        Search
+      </Button>
     </div>
   );
 };

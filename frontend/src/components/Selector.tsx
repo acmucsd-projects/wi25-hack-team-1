@@ -52,9 +52,20 @@ const Selector: React.FC<SelectorProps> = ({
 
   return (
     <div className={styles.selectorContainer} ref={dropdownRef}>
-      {/* Button to toggle dropdown */}
-      <Button onClick={toggleDropdown}>
-        {buttonLabel} {/* Use the dynamic button label */}
+      <Button
+        onClick={toggleDropdown}
+        overrides={{
+          BaseButton: {
+            style: {
+              backgroundColor: "#EEEEEE",
+              color: "#6B6B6B",
+              fontWeight: 400,
+              ":hover": { backgroundColor: "#EEEEEE" },
+            },
+          },
+        }}
+      >
+        {buttonLabel}
       </Button>
 
       {/* Dropdown menu */}
