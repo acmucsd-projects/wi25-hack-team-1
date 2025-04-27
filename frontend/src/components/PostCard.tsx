@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, StyledBody, StyledAction } from "baseui/card";
-import { Button } from "baseui/button";
+import { Card, StyledBody } from "baseui/card";
 import { StyledTitle } from "baseui/card";
 
 const PostCard = () => {
@@ -10,54 +9,43 @@ const PostCard = () => {
         Root: {
           style: {
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
+            flexDirection: "row",
+            alignItems: "center",
             justifyContent: "space-between",
-            width: "100%",
-            maxWidth: "800px",
-            margin: "20px auto",
-            padding: "20px",
+            width: "50%", // Half the page width
+            height: "33vh", // 1/3 of the page height
+            margin: "auto", // Center the card
+            position: "relative",
+            top: "33vh", // Center vertically
             boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+            padding: "20px",
           },
         },
       }}
     >
-      {/* Header Section */}
-      <StyledTitle>
-        <h3 style={{ margin: 0 }}>Post Title</h3>
-      </StyledTitle>
+      {/* Left Section: Date */}
+      <div style={{ flex: 1, textAlign: "center" }}>
+        <StyledTitle>
+          <h3 style={{ margin: 0 }}>Date</h3>
+        </StyledTitle>
+        <StyledBody>April 26, 2025</StyledBody>
+      </div>
 
-      {/* Body Section */}
-      <StyledBody>
-        This is a sample post description. It provides details about the content of the post.
-      </StyledBody>
+      {/* Middle Section: Location */}
+      <div style={{ flex: 1, textAlign: "center" }}>
+        <StyledTitle>
+          <h3 style={{ margin: 0 }}>Location</h3>
+        </StyledTitle>
+        <StyledBody>San Francisco, CA</StyledBody>
+      </div>
 
-      {/* Footer Section */}
-      <StyledAction>
-        <Button
-          overrides={{
-            BaseButton: {
-              style: {
-                width: "48%",
-                marginRight: "4%",
-              },
-            },
-          }}
-        >
-          Like
-        </Button>
-        <Button
-          overrides={{
-            BaseButton: {
-              style: {
-                width: "48%",
-              },
-            },
-          }}
-        >
-          Share
-        </Button>
-      </StyledAction>
+      {/* Right Section: Gender */}
+      <div style={{ flex: 1, textAlign: "center" }}>
+        <StyledTitle>
+          <h3 style={{ margin: 0 }}>Gender</h3>
+        </StyledTitle>
+        <StyledBody>Male</StyledBody>
+      </div>
     </Card>
   );
 };
