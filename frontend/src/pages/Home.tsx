@@ -1,5 +1,6 @@
 import Card from "@/components/PostCard";
 import FilterBar from "@/components/FilterBar";
+import CreatePostModal from "@/components/CreatePostModal";
 
 const Home: React.FC = () => {
   const onSubmit = (filters) => {
@@ -9,6 +10,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <FilterBar onSubmit={onSubmit} />
+      <CreatePostModal />
       <Card />
     </div>
   );
