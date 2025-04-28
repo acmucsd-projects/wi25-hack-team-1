@@ -9,13 +9,40 @@ import {
   ROLE,
 } from "baseui/modal";
 import { Button, KIND as ButtonKind } from "baseui/button";
+import { DatePicker } from "baseui/datepicker";
+import { Select } from "baseui/select";
+import styles from "@/components/CreatePostModal.module.css";
+import Selector from "@/components/Selector";
+import { TimePicker } from "baseui/timepicker";
+import { Textarea } from "baseui/textarea";
 
 const CreatePostModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const [text, setText] = React.useState("Hello");
+
+  const [date, setDate] = React.useState<
+    Date | Date[] | (Date | null | undefined)[] | null | undefined
+  >([new Date()]);
+
+  const [destination, setDestination] = React.useState<
+    { id: string; label: string }[]
+  >([]);
+
+  const [departure, setDeparture] = React.useState<string[]>([]); // Updated to store selected gender options
+
+  const [gender, setGender] = React.useState<string[]>([]); // Updated to store selected gender options
+
+  const [time, setTime] = React.useState(new Date("2025-04-14T20:21:36.050Z"));
+
+  const handleGenderChange = (selected: string[]) => {
+    setGender(selected); // Update the state with the selected gender options
+    console.log("Selected Gender:", selected); // Log the selected options for debugging
+  };
+
   return (
     <div>
-      <Button onClick={() => setIsOpen(true)}>Create Post</Button>
-      <Button onClick={() => setIsOpen(false)}>Close</Button>
+      <Button onClick={() => setIsOpen(true)}>Post</Button>
 
       <Modal
         onClose={() => setIsOpen(false)}
@@ -26,14 +53,90 @@ const CreatePostModal = () => {
         size={SIZE.default}
         role={ROLE.dialog}
       >
-        <ModalHeader>Hello world</ModalHeader>
+        <ModalHeader>Post a Trip </ModalHeader>
         <ModalBody>
-          Proin ut dui sed metus pharetra hend rerit vel non mi. Nulla ornare
-          faucibus ex, non facilisis nisl. Maecenas aliquet mauris ut tempus.
+          <div className={styles.verticalContainer}>
+            <div className={styles.horizontalContainer}>
+              <div className={styles.verticalContainer}>
+                <div className={styles.titleCombo}>
+                  <p>Departure Date</p>
+                  <DatePicker
+                    value={date}
+                    onChange={({ date }) => {
+                      setDate(Array.isArray(date) ? date : [date]);
+                    }}
+                    displayValueAtRangeIndex={0}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.verticalContainer}>
+                <div className={styles.titleCombo}>
+                  <p>Departure Time</p>
+                  <TimePicker
+                    value={time}
+                    onChange={(date) => {
+                      if (date) setTime(date);
+                    }}
+                    minTime={new Date("2025-04-14T07:00:00.000Z")}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.horizontalContainer}>
+              <div className={styles.verticalContainer}>
+                <div className={styles.titleCombo}>
+                  <p>Departure Location</p>
+                  <Selector
+                    options={[
+                      "Revelle",
+                      "Muir",
+                      "Marshall",
+                      "Warren",
+                      "Roosevelt",
+                      "Sixth",
+                      "Seventh",
+                      "Eighth",
+                    ]}
+                    onFilterChange={setDeparture} // Pass the callback to handle gender selection
+                    buttonLabel="Departure"
+                  />
+                </div>
+              </div>
+              <div className={styles.verticalContainer}>
+                <div className={styles.titleCombo}>
+                  <p>Destination</p>
+                  <Select
+                    options={[
+                      { label: "San Diego (SAN)", id: "1" },
+                      { label: "Los Angeles (LAX)", id: "2" },
+                    ]}
+                    value={destination}
+                    placeholder="Destination"
+                    onChange={(params) =>
+                      setDestination(
+                        params.value as { id: string; label: string }[],
+                      )
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.horizontalContainer}>
+              <Textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Additional information"
+                clearOnEscape
+              />
+            </div>
+          </div>
         </ModalBody>
         <ModalFooter>
           <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
-          <ModalButton>Okay</ModalButton>
+          <ModalButton>Post</ModalButton>
         </ModalFooter>
       </Modal>
     </div>

@@ -7,6 +7,8 @@ import { Client as Styletron } from "styletron-engine-monolithic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { LightTheme, BaseProvider } from "baseui";
 
+import "./App.css";
+
 const App: React.FC = () => {
   const engine = new Styletron();
   return (
