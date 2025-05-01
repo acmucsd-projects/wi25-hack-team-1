@@ -16,7 +16,7 @@ const router = express.Router();
  * @apiHeader {String} Authorization The user's auth token
  */
 router.get(
-  "/",
+  "/whoami",
   verifyAuthToken,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
