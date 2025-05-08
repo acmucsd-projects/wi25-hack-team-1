@@ -1,10 +1,10 @@
 import express, { NextFunction, Response } from "express";
 import { RydeRequest, verifyAuthToken } from "../middleware/auth";
-import { matchedData, validationResult } from "express-validator";
 import { Types } from "mongoose";
 
 import Post from "@/models/post";
-import validationErrorParser from "@/utils/validationErrorParser";
+import { createPostRules, postIdParam } from "@/validators/postValidators";
+import validateRequest from "@/utils/validateRequest";
 
 const router = express.Router();
 
@@ -21,14 +21,15 @@ const router = express.Router();
  */
 router.post(
   "/",
-  //verifyAuthToken,
+  verifyAuthToken,
+  createPostRules,
+  validateRequest,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
       const { flightDay, time, airport, luggage, numPassengers } = req.body;
 
       const post = new Post({
-        //creatorId: req.userId, // Authenticated user's ID
-        creatorId: "681be45ff8c472d3ded1f2d8",
+        creatorId: req.userId, // Authenticated user's ID
         flightDay,
         time,
         airport,
@@ -55,7 +56,9 @@ router.post(
  */
 router.get(
   "/:id",
-  //verifyAuthToken,
+  verifyAuthToken,
+  postIdParam,
+  validateRequest,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
