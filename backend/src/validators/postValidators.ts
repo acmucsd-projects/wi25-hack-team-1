@@ -48,6 +48,15 @@ export const createPostRules = [
     .withMessage("numPassengers must be at least 1"),
 ];
 
+export const updatePostRules = [
+  body("flightDay").optional().isISO8601().withMessage("Invalid date").toDate(),
+  body("time").optional().isISO8601().withMessage("Invalid time").toDate(),
+  body("airport").optional().isString().trim().notEmpty(),
+  body("luggage.carryOn").optional().isInt({ min: 0 }),
+  body("luggage.checked").optional().isInt({ min: 0 }),
+  body("numPassengers").optional().isInt({ min: 1 }),
+];
+
 /**
  * Validation rule for ensuring `:id` route param is a valid MongoDB ObjectId.
  */

@@ -1,12 +1,55 @@
 import express, { NextFunction, Response } from "express";
+import { matchedData } from "express-validator";
 import { RydeRequest, verifyAuthToken } from "../middleware/auth";
 import { Types } from "mongoose";
 
 import Post from "@/models/post";
-import { createPostRules, postIdParam } from "@/validators/postValidators";
+import {
+  createPostRules,
+  postIdParam,
+  updatePostRules,
+} from "@/validators/postValidators";
 import validateRequest from "@/utils/validateRequest";
 
 const router = express.Router();
+
+/* ---------- PUT /api/post/:id (update) ---------- */
+router.put(
+  "/:id",
+  verifyAuthToken,
+  postIdParam,
+  updatePostRules,
+  validateRequest,
+  async (
+    req: RydeRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const { id } = req.params;
+
+      // keep only validated fields
+      const updates = matchedData(req, { locations: ["body"] });
+
+      const updated = await Post.findOneAndUpdate(
+        { _id: id, creatorId: req.userId }, // Ensure the user is the creator
+        { $set: updates },
+        { new: true, runValidators: true },
+      );
+
+      if (!updated) {
+        res
+          .status(404)
+          .json({ error: "Post not found or you are not the owner" });
+        return; // <-- NO Response object returned
+      }
+
+      res.json(updated); // ← also not returned, just sent
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 /**
  * @api {post} /api/post
