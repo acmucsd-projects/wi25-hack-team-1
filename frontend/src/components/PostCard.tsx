@@ -1,6 +1,12 @@
 import React from "react";
-import { Card, StyledBody } from "baseui/card";
-import { StyledTitle } from "baseui/card";
+import { Card } from "baseui/card";
+import {
+  FaUser,
+  FaMars,
+  FaClock,
+  FaMapMarkerAlt,
+  FaUserFriends,
+} from "react-icons/fa";
 
 const PostCard = () => {
   return (
@@ -8,43 +14,98 @@ const PostCard = () => {
       overrides={{
         Root: {
           style: {
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "50%", // Half the page width
-            height: "33vh", // 1/3 of the page height
-            margin: "auto", // Center the card
-            position: "relative",
-            top: "33vh", // Center vertically
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+            width: "70%",
+            height: "20vh",
+            margin: "0 auto",
             padding: "20px",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+            borderRadius: "12px",
+            backgroundColor: "#fff",
           },
         },
       }}
     >
-      {/* Left Section: Date */}
-      <div style={{ flex: 1, textAlign: "center" }}>
-        <StyledTitle>
-          <h3 style={{ margin: 0 }}>Date</h3>
-        </StyledTitle>
-        <StyledBody>April 26, 2025</StyledBody>
-      </div>
+      {/* Outer container to enforce horizontal layout */}
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}>
+        {/* Name */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "8px",
+        }}>
+          <div style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            backgroundColor: "#eee",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "20px",
+          }}>
+            <FaUser />
+          </div>
+          <span style={{ fontSize: "16px", fontWeight: "500" }}>Maxime</span>
+        </div>
 
-      {/* Middle Section: Location */}
-      <div style={{ flex: 1, textAlign: "center" }}>
-        <StyledTitle>
-          <h3 style={{ margin: 0 }}>Location</h3>
-        </StyledTitle>
-        <StyledBody>San Francisco, CA</StyledBody>
-      </div>
+        {/* Gender */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "4px",
+        }}>
+          <FaMars />
+          <span style={{ fontSize: "14px" }}>Male</span>
+        </div>
 
-      {/* Right Section: Gender */}
-      <div style={{ flex: 1, textAlign: "center" }}>
-        <StyledTitle>
-          <h3 style={{ margin: 0 }}>Gender</h3>
-        </StyledTitle>
-        <StyledBody>Male</StyledBody>
+        {/* Time */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "4px",
+        }}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}>
+            <FaClock />
+            <span>12:35</span>
+          </div>
+          <div style={{ fontSize: "12px" }}>Date</div>
+        </div>
+
+        {/* Location */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "4px",
+        }}>
+          <FaMapMarkerAlt />
+          <span>On-Campus</span>
+        </div>
+
+        {/* People */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "4px",
+        }}>
+          <FaUserFriends />
+          <span>2</span>
+        </div>
       </div>
     </Card>
   );
