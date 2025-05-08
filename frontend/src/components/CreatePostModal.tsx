@@ -19,7 +19,7 @@ import { Textarea } from "baseui/textarea";
 const CreatePostModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const [text, setText] = React.useState("Hello");
+  const [text, setText] = React.useState("");
 
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
@@ -31,14 +31,9 @@ const CreatePostModal = () => {
 
   const [departure, setDeparture] = React.useState<string[]>([]); // Updated to store selected gender options
 
-  const [gender, setGender] = React.useState<string[]>([]); // Updated to store selected gender options
+  const [communication, setCommunication] = React.useState<string[]>([]); // Updated to store selected gender options
 
   const [time, setTime] = React.useState(new Date("2025-04-14T20:21:36.050Z"));
-
-  const handleGenderChange = (selected: string[]) => {
-    setGender(selected); // Update the state with the selected gender options
-    console.log("Selected Gender:", selected); // Log the selected options for debugging
-  };
 
   return (
     <div>
@@ -125,12 +120,28 @@ const CreatePostModal = () => {
             </div>
 
             <div className={styles.horizontalContainer}>
-              <Textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Additional information"
-                clearOnEscape
-              />
+              <div className={styles.verticalContainer}>
+                <div className={styles.titleCombo}>
+                  <p>Select form of communication</p>
+                  <Selector
+                    options={["Email", "Phone"]}
+                    onFilterChange={setCommunication} // Pass the callback to handle gender selection
+                    buttonLabel="Communication"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.horizontalContainer}>
+              <div className={styles.titleCombo}>
+                <p>Additional Information</p>
+                <Textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Type here"
+                  clearOnEscape
+                />
+              </div>
             </div>
           </div>
         </ModalBody>

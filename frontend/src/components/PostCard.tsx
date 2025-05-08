@@ -6,7 +6,9 @@ import {
   FaClock,
   FaMapMarkerAlt,
   FaUserFriends,
+  FaCalendarAlt,
 } from "react-icons/fa";
+import styles from "./PostCard.module.css";
 
 const PostCard = () => {
   return (
@@ -14,7 +16,7 @@ const PostCard = () => {
       overrides={{
         Root: {
           style: {
-            width: "70%",
+            width: "60%",
             height: "20vh",
             margin: "0 auto",
             padding: "20px",
@@ -26,83 +28,35 @@ const PostCard = () => {
       }}
     >
       {/* Outer container to enforce horizontal layout */}
-      <div style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}>
+      <div className={styles.outerContainer}>
         {/* Name */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "8px",
-        }}>
-          <div style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#eee",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "20px",
-          }}>
+        <div className={styles.rowContainer}>
+          <div className={styles.iconContainer}>
             <FaUser />
           </div>
-          <span style={{ fontSize: "16px", fontWeight: "500" }}>Maxime</span>
-        </div>
-
-        {/* Gender */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4px",
-        }}>
+          <span className={styles.nameText}>Maxime</span>
           <FaMars />
-          <span style={{ fontSize: "14px" }}>Male</span>
         </div>
 
         {/* Time */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4px",
-        }}>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-          }}>
-            <FaClock />
-            <span>12:35</span>
-          </div>
-          <div style={{ fontSize: "12px" }}>Date</div>
+        <div className={styles.rowContainer}>
+          <FaClock />
+          <span>12:35</span>
+        </div>
+
+        <div className={styles.rowContainer}>
+          <FaCalendarAlt />
+          <span>Date</span>
         </div>
 
         {/* Location */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4px",
-        }}>
+        <div className={styles.rowContainer}>
           <FaMapMarkerAlt />
           <span>On-Campus</span>
         </div>
 
         {/* People */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4px",
-        }}>
+        <div className={styles.rowContainer}>
           <FaUserFriends />
           <span>2</span>
         </div>

@@ -9,7 +9,6 @@
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   text-align: left;
@@ -24,9 +23,7 @@
   top: 100%;
   left: 0;
   background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   z-index: 1000;
   max-height: 200px;

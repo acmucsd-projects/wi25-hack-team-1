@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Selector.module.css";
 import { Button } from "baseui/button";
 import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
+import { PiX } from "react-icons/pi";
 
 interface SelectorProps {
   options: string[];
@@ -61,6 +62,8 @@ const Selector: React.FC<SelectorProps> = ({
               color: "#6B6B6B",
               fontWeight: 400,
               ":hover": { backgroundColor: "#EEEEEE" },
+              borderRadius: 0,
+              ":active": { backgroundColor: "#EEEEEE" },
             },
           },
         }}
