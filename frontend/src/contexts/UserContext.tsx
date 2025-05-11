@@ -1,8 +1,8 @@
 // UserContext.tsx (or .js)
 import React, { createContext, useState, useEffect } from "react";
 import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
-import { auth } from "./config";
-import { fetchMongoData, MongoUser } from "./userAPI.ts";
+import { auth } from "@/firebase/config";
+import { fetchMongoData, MongoUser } from "@/api/user";
 // Define the shape of your context's data
 type UserContextType = {
   firebaseUser: FirebaseUser | null;
