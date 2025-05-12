@@ -128,4 +128,26 @@ router.get(
   },
 );
 
+/**
+ * @api {get} /api/post/
+ *
+ * Get all posts
+ */
+router.get(
+  "/:id",
+  validateRequest,
+  async (req: RydeRequest, res: Response, next: NextFunction) => {
+    try {
+      const posts = await Post.find()
+        .populate("creatorId", "firstName lastName uni email")
+        .populate("passengers", "firstName lastName");
+
+      res.json(posts);
+    } catch (err) {
+      console.error("Error fetching post:", err);
+      next(err);
+    }
+  },
+);
+
 export { router as postRouter };
