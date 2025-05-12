@@ -147,7 +147,29 @@ const CreatePostModal = () => {
         </ModalBody>
         <ModalFooter>
           <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
-          <ModalButton>Post</ModalButton>
+          <ModalButton
+            onClick={() => {              
+              // Display the information in an alert
+              alert(`Post Details:
+                - Departure Date: ${date}
+                - Departure Time: ${time}
+                - Departure Location: ${departure.join(", ")}
+                - Destination: ${destination.map((d) => d.label).join(", ")}
+                - Communication: ${communication.join(", ")}
+                - Additional Information: ${text}`);
+
+                // Clear all fields
+              setDate([new Date()]);
+              setTime(new Date("2025-04-14T20:21:36.050Z"));
+              setDeparture([]);
+              setDestination([]);
+              setCommunication([]);
+              setText("");
+              // Close the modal
+              setIsOpen(false);
+            }}>
+            Post
+          </ModalButton>
         </ModalFooter>
       </Modal>
     </div>
