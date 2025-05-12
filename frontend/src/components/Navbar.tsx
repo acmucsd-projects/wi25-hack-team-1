@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { signOutUser, signInWithGooglePopup } from "@/firebase/auth_google";
-import { UserContext } from "@/firebase/UserContext";
+import { UserContext } from "@/contexts/UserContext";
 import styles from "@/components/Navbar.module.css";
 import googleLogo from "@/assets/google-icon.svg"; // Adjust the path as necessary
 import { MdLogout } from "react-icons/md";

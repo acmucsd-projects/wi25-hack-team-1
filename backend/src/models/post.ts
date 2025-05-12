@@ -1,19 +1,21 @@
-import { InferSchemaType, Schema, model } from "mongoose";
-import { number } from "zod";
+import { InferSchemaType, Schema, model, Types } from "mongoose";
 
 const luggageSchema = new Schema({
-  carryOn: { type: number, required: true },
-  checked: { type: number, required: true },
+  carryOn: { type: Number, required: true },
+  checked: { type: Number, required: true },
 });
 
 const postSchema = new Schema(
   {
-    creatorId: { type: String, required: true },
+    // Reference to the User model, so we can populate certain fields on the post.
+    // Ex: firstName, lastName, university, email, etc.
+    creatorId: { type: Types.ObjectId, ref: "User", required: true },
     flightDay: { type: Date, required: true },
-    time: { type: Date, required: true },
+    time: { type: Date, required: true }, // Desired time to BE at Airport.
     airport: { type: String, required: true },
     luggage: { type: luggageSchema, required: true },
-    numPassengers: { type: number, required: true },
+    numPassengers: { type: Number, required: true }, // Total capacity of ride (Seeking this many passengers)
+    passengers: [{ type: Types.ObjectId, ref: "User" }], // Array of users in the ride
   },
   { timestamps: true },
 );
