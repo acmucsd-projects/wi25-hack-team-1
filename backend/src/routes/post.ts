@@ -134,7 +134,7 @@ router.get(
  * Get all posts
  */
 router.get(
-  "/:id",
+  "/",
   validateRequest,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
