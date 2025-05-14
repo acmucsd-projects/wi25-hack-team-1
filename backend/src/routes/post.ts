@@ -150,4 +150,36 @@ router.get(
   },
 );
 
+/**
+ * @api {delete} /api/post/:id
+ * Delete a post by ID (creator only)
+ * @apiHeader {String} Authorization The user's auth token
+ * @apiParam {String} id Post ID
+ */
+router.delete(
+  "/:id",
+  verifyAuthToken,
+  postIdParam,
+  validateRequest,
+  async (req: RydeRequest, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const deleted = await Post.findOneAndDelete({
+        _id: id,
+        creatorId: req.userId,
+      });
+
+      if (!deleted) {
+        res.status(404).json({ error: "Post not found or you are not the owner" });
+        return;
+      }
+
+      res.status(204).send(); // No content
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      next(err);
+    }
+  },
+);
+
 export { router as postRouter };
