@@ -1,8 +1,7 @@
 export type MongoUser = {
   _id: string;
   uid: string;
-  firstname: string;
-  lastname: string;
+  name: string;
   uni: string;
   email: string;
   phone: string;

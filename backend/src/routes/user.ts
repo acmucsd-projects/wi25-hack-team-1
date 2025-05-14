@@ -41,8 +41,7 @@ router.get(
  *
  * Create a new user
  *
- * @apiParam {String} firstName
- * @apiParam {String} lastName
+ * @apiParam {String} name
  * @apiParam {String} uni
  * @apiParam {String} email
  * @apiParam {String} phoneNumber
@@ -63,13 +62,11 @@ router.post(
       // if there are errors, then this function throws an exception
       validationErrorParser(errors);
 
-      const { firstName, lastName, uni, email, phone, gender, photoURL } =
-        matchedData(req);
+      const { name, uni, email, phone, gender, photoURL } = matchedData(req);
 
       const user = new User({
         uid: req.userId,
-        firstName: firstName,
-        lastName: lastName,
+        name: name,
         uni: uni,
         email: email,
         phone: phone,
@@ -93,8 +90,7 @@ router.post(
  *
  * Update an existing user
  *
- * @apiParam {String} [firstName]
- * @apiParam {String} [lastName]
+ * @apiParam {String} [name]
  * @apiParam {String} [uni]
  * @apiParam {String} [email]
  * @apiParam {String} [phoneNumber]
@@ -104,8 +100,7 @@ router.post(
 router.put(
   "/:id",
   verifyAuthToken,
-  body("firstName").optional().isString(),
-  body("lastName").optional().isString(),
+  body("name").optional().isString(),
   body("uni").optional().isString(),
   body("email").optional().isEmail(),
   body("phone").optional().isString(),
