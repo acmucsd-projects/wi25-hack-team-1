@@ -1,24 +1,40 @@
-// filepath: /c:/Users/maxim/Desktop/wi25-hack-team-1/frontend/src/pages/Login.tsx
 import React, { useState } from "react";
 import styles from "./Login.module.css";
-import { Link } from "react-router-dom";
 
-// login page component
-const Login: React.FC = () => {
+const Register: React.FC = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+    }
     // Handle login logic here
+    console.log("Name:", name);
     console.log("Email:", email);
     console.log("Password:", password);
+    console.log("Confirm Password:", confirmPassword);
   };
 
   return (
     <div className={styles.container}>
-      <h1>Login to Rydeshare</h1>
+      <h1>Sign up to Rydeshare</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="Name" className={styles.label}>
+            Name:
+          </label>
+          <input
+            id="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
         <div className={styles.inputGroup}>
           <label htmlFor="email" className={styles.label}>
             Email:
@@ -45,16 +61,25 @@ const Login: React.FC = () => {
             className={styles.input}
           />
         </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="confirmPassword" className={styles.label}>
+            Confirm Password:
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
         <button type="submit" className={styles.button}>
           Login
         </button>
-        <p className={styles.registerText}>
-          If you don't have an account,{" "}
-          <Link to="/register">Register here</Link>
-        </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

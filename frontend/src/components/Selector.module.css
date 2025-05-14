@@ -1,0 +1,42 @@
+.selectorContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownButton {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdownButton:hover {
+  background-color: #0056b3;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  width: 200px;
+}
+
+.dropdownItem {
+  margin-bottom: 5px;
+}
+
+.dropdownItem:last-child {
+  margin-bottom: 0;
+}
+
+.dropdownItem label {
+  cursor: pointer;
+}
