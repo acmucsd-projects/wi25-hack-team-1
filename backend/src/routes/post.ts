@@ -32,7 +32,7 @@ router.put(
       const updates = matchedData(req, { locations: ["body"] });
 
       const updated = await Post.findOneAndUpdate(
-        { _id: id, creatorId: req.userId }, // Ensure the user is the creator
+        { _id: id, creator: req.userId }, // Ensure the user is the creator
         { $set: updates },
         { new: true, runValidators: true },
       );
@@ -72,7 +72,7 @@ router.post(
       const { flightDay, time, airport, luggage, numPassengers } = req.body;
 
       const post = new Post({
-        creatorId: req.userId, // Authenticated user's ID
+        creator: req.userId, // Authenticated user's ID
         flightDay,
         time,
         airport,
@@ -112,8 +112,8 @@ router.get(
 
     try {
       const post = await Post.findById(id)
-        .populate("creatorId", "firstName lastName uni email")
-        .populate("passengers", "firstName lastName");
+        .populate("creator", "name uni email")
+        .populate("passengers", "name");
 
       if (!post) {
         res.status(404).json({ error: "Post not found" });
@@ -139,8 +139,8 @@ router.get(
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
       const posts = await Post.find()
-        .populate("creatorId", "firstName lastName uni email")
-        .populate("passengers", "firstName lastName");
+        .populate("creator", "name uni email")
+        .populate("passengers", "name");
 
       res.json(posts);
     } catch (err) {
@@ -166,7 +166,7 @@ router.delete(
       const { id } = req.params;
       const deleted = await Post.findOneAndDelete({
         _id: id,
-        creatorId: req.userId,
+        creator: req.userId,
       });
 
       if (!deleted) {
