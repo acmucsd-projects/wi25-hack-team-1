@@ -1,6 +1,6 @@
 import express, { NextFunction, Response } from "express";
 import { RydeRequest, verifyAuthToken } from "../middleware/auth";
-import { matchedData, validationResult } from "express-validator";
+import { matchedData, validationResult, body } from "express-validator";
 
 import User from "@/models/user";
 import validationErrorParser from "@/utils/validationErrorParser";
@@ -41,8 +41,7 @@ router.get(
  *
  * Create a new user
  *
- * @apiParam {String} firstName
- * @apiParam {String} lastName
+ * @apiParam {String} name
  * @apiParam {String} uni
  * @apiParam {String} email
  * @apiParam {String} phoneNumber
@@ -63,13 +62,11 @@ router.post(
       // if there are errors, then this function throws an exception
       validationErrorParser(errors);
 
-      const { firstName, lastName, uni, email, phone, gender, photoURL } =
-        matchedData(req);
+      const { name, uni, email, phone, gender, photoURL } = matchedData(req);
 
       const user = new User({
         uid: req.userId,
-        firstName: firstName,
-        lastName: lastName,
+        name: name,
         uni: uni,
         email: email,
         phone: phone,
@@ -84,6 +81,102 @@ router.post(
       res.status(201).json(newUser);
     } catch (error) {
       next(error);
+    }
+  },
+);
+
+/**
+ * @api {put} /api/user/:id
+ *
+ * Update an existing user
+ *
+ * @apiParam {String} [name]
+ * @apiParam {String} [uni]
+ * @apiParam {String} [email]
+ * @apiParam {String} [phoneNumber]
+ * @apiParam {String} [gender]
+ * @apiParam {String} [photoURL]
+ */
+router.put(
+  "/:id",
+  verifyAuthToken,
+  body("name").optional().isString(),
+  body("uni").optional().isString(),
+  body("email").optional().isEmail(),
+  body("phone").optional().isString(),
+  body("gender").optional().isString(),
+  body("photoURL").optional().isURL(),
+  async (req: RydeRequest, res: Response, next: NextFunction) => {
+    // extract any errors that were found by the validator
+    const errors = validationResult(req);
+
+    console.log(req.body);
+
+    try {
+      // if there are errors, then this function throws an exception
+      validationErrorParser(errors);
+
+      // extract only validated fields
+      const updates = matchedData(req, { locations: ["body"] });
+
+      // ensure the :id param matches a document owned by the current user
+      const { id } = req.params;
+      const user = await User.findById(id);
+      if (!user) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      if (user.uid !== req.userId) {
+        res
+          .status(403)
+          .json({ error: "Forbidden: cannot edit another user's data" });
+        return;
+      }
+
+      // apply updates and save
+      Object.assign(user, updates);
+      const updated = await user.save();
+
+      // return the updated user
+      res.json(updated);
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+/**
+ * @api {delete} /api/user/:id
+ *
+ * Delete a user
+ *
+ * (protected-only the user themselves can delete their account)
+ */
+router.delete(
+  "/:id",
+  verifyAuthToken,
+  async (req: RydeRequest, res: Response, next: NextFunction) => {
+    try {
+      // find user document
+      const { id } = req.params;
+      const user = await User.findById(id);
+      if (!user) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      // ensure it's the owner
+      if (user.uid !== req.userId) {
+        res
+          .status(403)
+          .json({ error: "Forbidden: cannot delete another user's account" });
+        return;
+      }
+
+      await user.deleteOne();
+      res.status(204).end();
+    } catch (err) {
+      next(err);
     }
   },
 );
