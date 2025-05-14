@@ -170,7 +170,9 @@ router.delete(
       });
 
       if (!deleted) {
-        res.status(404).json({ error: "Post not found or you are not the owner" });
+        res
+          .status(404)
+          .json({ error: "Post not found or you are not the owner" });
         return;
       }
 
