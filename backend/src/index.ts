@@ -6,6 +6,7 @@ import connectDB from "@/services/database";
 import env from "@/utils/validateEnv";
 import cors from "cors";
 import { userRouter } from "@/routes/user";
+import { postRouter } from "@/routes/post";
 import { isHttpError } from "http-errors";
 
 const app: Express = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Define Routes
 app.use("/api/user", userRouter);
+app.use("/api/post", postRouter);
 
 /**
  * Error handler; all errors thrown by server are handled here.
