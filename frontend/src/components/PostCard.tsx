@@ -19,8 +19,7 @@ interface PostCardProps {
   pfp?: string;
 }
 
-
-const PostCard = ({name, time, date, location, numPeople}:PostCardProps) => {
+const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
   return (
     <Card
       overrides={{
@@ -48,15 +47,21 @@ const PostCard = ({name, time, date, location, numPeople}:PostCardProps) => {
           <FaMars />
         </div>
 
-        {/* Time */}
-        <div className={styles.rowContainer}>
-          <FaClock />
-          <span>{time.toDateString()}</span>
-        </div>
-
         <div className={styles.rowContainer}>
           <FaCalendarAlt />
           <span>{date.toDateString()}</span>
+        </div>
+
+        {/* Time */}
+        <div className={styles.rowContainer}>
+          <FaClock />
+          <span>
+            {time.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </span>
         </div>
 
         {/* Location */}

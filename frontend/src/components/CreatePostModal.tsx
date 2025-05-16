@@ -33,7 +33,7 @@ const CreatePostModal = () => {
 
   const [communication, setCommunication] = React.useState<string[]>([]); // Updated to store selected gender options
 
-  const [time, setTime] = React.useState(new Date("2025-04-14T20:21:36.050Z"));
+  const [time, setTime] = React.useState(new Date("2025-04-14T00:00:00.0000"));
 
   return (
     <div>
@@ -44,10 +44,15 @@ const CreatePostModal = () => {
         closeable
         isOpen={isOpen}
         animate
-        autoFocus
+        autoFocus={false}
         size={SIZE.default}
         role={ROLE.dialog}
       >
+        <button
+          style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
+          tabIndex={0}
+          aria-hidden="true"
+        />
         <ModalHeader>Post a Trip </ModalHeader>
         <ModalBody>
           <div className={styles.verticalContainer}>
@@ -148,7 +153,7 @@ const CreatePostModal = () => {
         <ModalFooter>
           <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
           <ModalButton
-            onClick={() => {              
+            onClick={() => {
               // Display the information in an alert
               alert(`Post Details:
                 - Departure Date: ${date}
@@ -158,7 +163,7 @@ const CreatePostModal = () => {
                 - Communication: ${communication.join(", ")}
                 - Additional Information: ${text}`);
 
-                // Clear all fields
+              // Clear all fields
               setDate([new Date()]);
               setTime(new Date("2025-04-14T20:21:36.050Z"));
               setDeparture([]);
@@ -167,7 +172,8 @@ const CreatePostModal = () => {
               setText("");
               // Close the modal
               setIsOpen(false);
-            }}>
+            }}
+          >
             Post
           </ModalButton>
         </ModalFooter>

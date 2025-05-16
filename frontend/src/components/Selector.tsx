@@ -57,6 +57,7 @@ const Selector: React.FC<SelectorProps> = ({
         overrides={{
           BaseButton: {
             style: {
+              width: "100%",
               backgroundColor: "#EEEEEE",
               color: "#6B6B6B",
               fontWeight: 400,
@@ -79,6 +80,13 @@ const Selector: React.FC<SelectorProps> = ({
                 checked={isOptionSelected(option)}
                 onChange={() => handleOptionToggle(option)}
                 labelPlacement={LABEL_PLACEMENT.right}
+                overrides={{
+                  Label: {
+                    style: {
+                      fontWeight: 400,
+                    },
+                  },
+                }}
               >
                 {option}
               </Checkbox>
