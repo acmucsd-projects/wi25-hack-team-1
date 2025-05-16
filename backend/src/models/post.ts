@@ -8,8 +8,8 @@ const luggageSchema = new Schema({
 const postSchema = new Schema(
   {
     // Reference to the User model, so we can populate certain fields on the post.
-    // Ex: firstName, lastName, university, email, etc.
-    creatorId: { type: Types.ObjectId, ref: "User", required: true },
+    // Ex: name, university, email, etc.
+    creator: { type: Types.ObjectId, ref: "User", required: true },
     flightDay: { type: Date, required: true },
     time: { type: Date, required: true }, // Desired time to BE at Airport.
     airport: { type: String, required: true },

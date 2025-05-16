@@ -26,7 +26,7 @@ const Home: React.FC = () => {
         setPosts(data.map((post) => ({
           ...post,
           flightDay: new Date(post.flightDay),
-          time: new Date(post.time),
+          time: new Date(post.time), 
         })));
         console.log("Posts fetched:", data);
       } catch (error) {
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
     <div>
       <FilterBar onSubmit={onSubmit} />
       <CreatePostModal />
-      {posts && posts.map((post, idx) => (
+      {posts && posts.map((post, idx) => (  
       <Card 
         key={post._id ?? idx} // fallback to index if _id is null/undefined
         location={post.airport}
