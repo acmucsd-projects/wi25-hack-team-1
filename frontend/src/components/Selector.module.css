@@ -1,6 +1,11 @@
 .selectorContainer {
   position: relative;
   display: inline-block;
+  width: 100%;
+}
+
+.button{
+  display: flex;
 }
 
 .dropdownButton {

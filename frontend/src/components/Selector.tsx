@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Selector.module.css";
 import { Button } from "baseui/button";
 import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
+import { GoTriangleDown } from "react-icons/go";
+
 
 interface SelectorProps {
   options: string[];
@@ -50,8 +52,19 @@ const Selector: React.FC<SelectorProps> = ({
     };
   }, []);
 
+  const getButtonLabel = () => {
+    if (selectedOptions.length === 0) {
+      return buttonLabel; // Default label
+    } else if (selectedOptions.length === 1) {
+      return selectedOptions[0]; // Display the selected option
+    } else {
+      return `${selectedOptions.length} selected`; // Display "x selected"
+    }
+  };
+
   return (
     <div className={styles.selectorContainer} ref={dropdownRef}>
+      
       <Button
         onClick={toggleDropdown}
         overrides={{
@@ -59,17 +72,24 @@ const Selector: React.FC<SelectorProps> = ({
             style: {
               width: "100%",
               backgroundColor: "#EEEEEE",
-              color: "#6B6B6B",
-              fontWeight: 400,
+              color: selectedOptions.length > 0 ? "#000000" : "#6B6B6B",
               ":hover": { backgroundColor: "#EEEEEE" },
               borderRadius: 0,
               ":active": { backgroundColor: "#EEEEEE" },
+              fontWeight: "400",
+              display: "flex", // Add flex display
+              alignItems: "center", // Vertically center the content
+              justifyContent: "space-between", // Distribute space between label and icon
+
             },
           },
         }}
       >
-        {buttonLabel}
+        {getButtonLabel()}
+        <GoTriangleDown color="black" size={17}/> {/* Add the triangle icon */}
+
       </Button>
+
 
       {/* Dropdown menu */}
       {isDropdownOpen && (
