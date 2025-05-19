@@ -11,6 +11,7 @@ import createHttpError from "http-errors";
 const validationErrorParser = (errors: Result<ValidationError>) => {
   if (!errors.isEmpty()) {
     // trim removes the trailing space created in the for loop
+    console.error(errors.array());
     throw createHttpError(400, errors.array()[0].msg.trim());
   }
 };

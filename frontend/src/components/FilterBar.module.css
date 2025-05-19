@@ -2,7 +2,7 @@
   display: flex;
   gap: 20px; /* Space between the boxes */
   justify-content: center;
-  width: 60%;
+  width: 70%;
   margin: 0 auto; /* Center the sort container */
   align-items: center; /* Center items vertically */
   padding: 20px;

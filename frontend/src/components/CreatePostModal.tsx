@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import {
   Modal,
   ModalHeader,
@@ -15,8 +16,14 @@ import styles from "@/components/CreatePostModal.module.css";
 import Selector from "@/components/Selector";
 import { TimePicker } from "baseui/timepicker";
 import { Textarea } from "baseui/textarea";
+import { UserContext } from "@/contexts/UserContext";
+interface CreatePostModalProps {
+  onPostCreated: () => void;
+}
 
-const CreatePostModal = () => {
+const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
+  const { firebaseUser } = useContext(UserContext);
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [text, setText] = React.useState("");
@@ -88,16 +95,7 @@ const CreatePostModal = () => {
                 <div className={styles.titleCombo}>
                   <p>Departure Location</p>
                   <Selector
-                    options={[
-                      "Revelle",
-                      "Muir",
-                      "Marshall",
-                      "Warren",
-                      "Roosevelt",
-                      "Sixth",
-                      "Seventh",
-                      "Eighth",
-                    ]}
+                    options={["On-Campus", "Off-Campus"]}
                     onFilterChange={setDeparture} // Pass the callback to handle gender selection
                     buttonLabel="Departure"
                   />
@@ -152,7 +150,7 @@ const CreatePostModal = () => {
         <ModalFooter>
           <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
           <ModalButton
-            onClick={() => {
+            onClick={async () => {
               // Display the information in an alert
               alert(`Post Details:
                 - Departure Date: ${date}
@@ -162,6 +160,29 @@ const CreatePostModal = () => {
                 - Communication: ${communication.join(", ")}
                 - Additional Information: ${text}`);
 
+              try {
+                const token = await firebaseUser?.getIdToken();
+                await fetch(
+                  `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
+                  {
+                    method: "POST",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      flightDay: (date as Date[])[0].toISOString(),
+                      time: time.toISOString(),
+                      airport: destination[0].label,
+                      luggage: { carryOn: 1, checked: 1 },
+                      numPassengers: 1,
+                    }),
+                  },
+                );
+              } catch (error) {
+                console.error("Error posting data:" + error);
+              }
+              onPostCreated();
               // Clear all fields
               setDate([new Date()]);
               setTime(new Date("2025-04-14T20:21:36.050Z"));
@@ -170,6 +191,7 @@ const CreatePostModal = () => {
               setCommunication([]);
               setText("");
               // Close the modal
+
               setIsOpen(false);
             }}
           >

@@ -11,35 +11,40 @@ const Home: React.FC = () => {
     console.log("Filters submitted:", filters);
   };
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = (await response.json()) as Post[];
-        setPosts(
-          data.map((post) => ({
-            ...post,
-            flightDay: new Date(post.flightDay),
-            time: new Date(post.time),
-          })),
-        );
-        console.log("Posts fetched:", data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const data = (await response.json()) as Post[];
+      setPosts(
+        data.map((post) => ({
+          ...post,
+          flightDay: new Date(post.flightDay),
+          time: new Date(post.time),
+        })),
+      );
+      console.log("Posts fetched:", data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchPosts();
   }, []);
 
   return (
     <div>
       <FilterBar onSubmit={onSubmit} />
-      <CreatePostModal />
+      <CreatePostModal
+        onPostCreated={() => {
+          fetchPosts();
+        }}
+      />
       {posts &&
         posts.map((post, idx) => (
           <Card
@@ -48,7 +53,7 @@ const Home: React.FC = () => {
             date={post.flightDay}
             time={post.time}
             numPeople={post.numPassengers}
-            name={post.creator ? `${post.creator.name}` : "Unknown"}
+            name={post.creator ? `${post.creator.name}` : "Unkno`w`n"}
           />
         ))}
     </div>

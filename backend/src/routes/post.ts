@@ -10,6 +10,7 @@ import {
   updatePostRules,
 } from "@/validators/postValidators";
 import validateRequest from "@/utils/validateRequest";
+import user from "@/models/user";
 
 const router = express.Router();
 
@@ -71,8 +72,19 @@ router.post(
     try {
       const { flightDay, time, airport, luggage, numPassengers } = req.body;
 
+      const foundUser = await user
+        .findOne({
+          uid: req.userId,
+        })
+        .exec();
+
+      if (!foundUser) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
       const post = new Post({
-        creator: req.userId, // Authenticated user's ID
+        creator: foundUser._id, // Authenticated user's ID
         flightDay,
         time,
         airport,
