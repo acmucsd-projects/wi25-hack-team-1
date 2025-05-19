@@ -8,12 +8,14 @@ interface SelectorProps {
   options: string[];
   onFilterChange: (selectedOptions: string[]) => void;
   buttonLabel?: string; // Custom label for the button
+  error?: boolean;
 }
 
 const Selector: React.FC<SelectorProps> = ({
   options,
   onFilterChange,
   buttonLabel = "Filter Options",
+  error,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -69,15 +71,18 @@ const Selector: React.FC<SelectorProps> = ({
           BaseButton: {
             style: {
               width: "100%",
-              backgroundColor: "#EEEEEE",
               color: selectedOptions.length > 0 ? "#000000" : "#6B6B6B",
-              ":hover": { backgroundColor: "#EEEEEE" },
+              ":hover": error
+                ? { backgroundColor: "#ffefed" }
+                : { backgroundColor: "#EEEEEE" },
               borderRadius: 0,
               ":active": { backgroundColor: "#EEEEEE" },
               fontWeight: "400",
               display: "flex", // Add flex display
               alignItems: "center", // Vertically center the content
               justifyContent: "space-between", // Distribute space between label and icon
+              border: error ? "2px solid #f1998e" : "none", // Add this line
+              backgroundColor: error ? "#ffefed" : "#EEEEEE",
             },
           },
         }}

@@ -61,8 +61,8 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
 
       <Select
         options={[
-          { label: "San Diego (SAN)", id: "1" },
-          { label: "Los Angeles (LAX)", id: "2" },
+          { label: "San Diego (SAN)", id: "SAN" },
+          { label: "Los Angeles (LAX)", id: "LAX" },
         ]}
         value={destination}
         placeholder="Destination"

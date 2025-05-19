@@ -3,6 +3,7 @@ import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
 import { useEffect, useState } from "react";
 import { Post } from "@/types";
+import styles from "@/pages/Home.module.css";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -45,17 +46,19 @@ const Home: React.FC = () => {
           fetchPosts();
         }}
       />
-      {posts &&
-        posts.map((post, idx) => (
-          <Card
-            key={post._id ?? idx} // fallback to index if _id is null/undefined
-            location={post.airport}
-            date={post.flightDay}
-            time={post.time}
-            numPeople={post.numPassengers}
-            name={post.creator ? `${post.creator.name}` : "Unkno`w`n"}
-          />
-        ))}
+      <div className={styles.cardList}>
+        {posts &&
+          posts.map((post, idx) => (
+            <Card
+              key={post._id ?? idx}
+              location={post.airport}
+              date={post.flightDay}
+              time={post.time}
+              numPeople={post.numPassengers}
+              name={post.creator ? `${post.creator.name}` : "Unkno`w`n"}
+            />
+          ))}
+      </div>
     </div>
   );
 };
