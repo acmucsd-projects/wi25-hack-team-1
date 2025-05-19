@@ -65,7 +65,6 @@ const CreatePostModal = () => {
                     onChange={({ date }) => {
                       setDate(Array.isArray(date) ? date : [date]);
                     }}
-                    displayValueAtRangeIndex={0}
                   />
                 </div>
               </div>
