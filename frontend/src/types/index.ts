@@ -1,6 +1,6 @@
 export interface Post {
   _id: string;
-  creatorId: User;
+  creator: User;
   flightDay: Date;
   time: Date;
   airport: string;
@@ -14,8 +14,7 @@ export interface Post {
 
 export interface User {
   uid: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   uni: string; // <TODO> Will need to be validated
   email: string;
   phone: string;

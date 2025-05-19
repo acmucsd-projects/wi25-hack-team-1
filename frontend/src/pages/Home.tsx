@@ -48,11 +48,7 @@ const Home: React.FC = () => {
             date={post.flightDay}
             time={post.time}
             numPeople={post.numPassengers}
-            name={
-              post.creatorId
-                ? `${post.creatorId.firstName ?? ""} ${post.creatorId.lastName ?? ""}`
-                : "Unknown"
-            }
+            name={post.creator ? `${post.creator.name}` : "Unknown"}
           />
         ))}
     </div>
