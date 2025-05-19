@@ -1,55 +1,56 @@
-import React, { useState } from "react";
-import Selector from "@/components/Selector";
+import Card from "@/components/PostCard";
+import FilterBar from "@/components/FilterBar";
+import CreatePostModal from "@/components/CreatePostModal";
+import { useEffect, useState } from "react";
+import { Post } from "@/types";
 
 const Home: React.FC = () => {
-  const [multiSelectOptions, setMultiSelectOptions] = useState<string[]>([]);
-  const [singleSelectOption, setSingleSelectOption] = useState<string | null>(
-    null,
-  );
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  const multiSelectOptionsList = ["Option 1", "Option 2", "Option 3"];
-  const singleSelectOptionsList = ["Choice A", "Choice B", "Choice C"];
-
-  const handleMultiSelectChange = (selected: string[]) => {
-    setMultiSelectOptions(selected);
-    console.log("Multi-select options:", selected);
+  const onSubmit = (filters) => {
+    console.log("Filters submitted:", filters);
   };
 
-  const handleSingleSelectChange = (selected: string) => {
-    setSingleSelectOption(selected);
-    console.log("Single-select option:", selected);
-  };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = (await response.json()) as Post[];
+        setPosts(
+          data.map((post) => ({
+            ...post,
+            flightDay: new Date(post.flightDay),
+            time: new Date(post.time),
+          })),
+        );
+        console.log("Posts fetched:", data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-
-      {/* Multi-select example */}
-      <h2>Multi-Select Dropdown</h2>
-      <Selector
-        options={multiSelectOptionsList}
-        onFilterChange={handleMultiSelectChange}
-        isMultiSelect={true}
-      />
-      {multiSelectOptions.length > 0 && (
-        <p>
-          Currently selected (multi-select):{" "}
-          {multiSelectOptions.sort().join(", ")}
-        </p>
-      )}
-
-      {/* Single-select example */}
-      <h2>Single-Select Dropdown</h2>
-      <Selector
-        options={singleSelectOptionsList}
-        onFilterChange={(selectedOptions) =>
-          handleSingleSelectChange(selectedOptions[0])
-        }
-        isMultiSelect={false}
-      />
-      {singleSelectOption && (
-        <p>Currently selected (single-select): {singleSelectOption}</p>
-      )}
+      <FilterBar onSubmit={onSubmit} />
+      <CreatePostModal />
+      {posts &&
+        posts.map((post, idx) => (
+          <Card
+            key={post._id ?? idx} // fallback to index if _id is null/undefined
+            location={post.airport}
+            date={post.flightDay}
+            time={post.time}
+            numPeople={post.numPassengers}
+            name={post.creator ? `${post.creator.name}` : "Unknown"}
+          />
+        ))}
     </div>
   );
 };

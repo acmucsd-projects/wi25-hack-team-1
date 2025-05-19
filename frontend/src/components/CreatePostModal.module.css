@@ -1,0 +1,27 @@
+.verticalContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between the boxes */
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto; /* Center the sort container */
+  align-items: center; /* Center items vertically */
+}
+
+.horizontalContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px; /* Space between the boxes */
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto; /* Center the sort container */
+  align-items: center; /* Center items vertically */
+}
+
+.titleCombo {
+  font-size: 15px;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

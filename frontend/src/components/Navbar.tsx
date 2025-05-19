@@ -5,7 +5,7 @@ import { signOutUser, signInWithGooglePopup } from "@/firebase/auth_google";
 import { UserContext } from "@/contexts/UserContext";
 import styles from "@/components/Navbar.module.css";
 import googleLogo from "@/assets/google-icon.svg"; // Adjust the path as necessary
-import signOut from "@/assets/signOut.png"; // Adjust the path as necessary
+import { MdLogout } from "react-icons/md";
 
 const Navbar: React.FC = () => {
   const { firebaseUser } = useContext(UserContext);
@@ -20,18 +20,16 @@ const Navbar: React.FC = () => {
       <div className={styles.list_right}>
         {firebaseUser ? (
           <div className={styles.loginContainer}>
-            <p>Welcome, {firebaseUser.email}!</p>
             <button
               type="button"
-              className={styles.googleButton}
+              className={styles.logOutButton}
               onClick={signOutUser}
             >
-              <img src={signOut} alt="Google logo" width="20" height="20" />
+              <MdLogout size={30} />
             </button>
           </div>
         ) : (
           <div className={styles.loginContainer}>
-            <p>Please sign in with a @ucsd.edu account</p>
             <button
               type="button"
               className={styles.googleButton}

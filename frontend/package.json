@@ -15,9 +15,11 @@
   },
   "dependencies": {
     "baseui": "^0.0.0-next-2113e1821",
+    "clsx": "^2.1.1",
     "firebase": "^11.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.1.5",
     "styletron-engine-monolithic": "^1.0.0",
     "styletron-react": "^6.1.1"
@@ -25,8 +27,8 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.13.1",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^10.0.1",
