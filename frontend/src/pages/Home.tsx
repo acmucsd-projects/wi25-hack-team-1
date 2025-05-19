@@ -3,7 +3,6 @@ import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
 import { useEffect, useState } from "react";
 import { Post } from "@/types";
-import { time } from "console";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -16,7 +15,7 @@ const Home: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_PUBLIC_BACKEND_URL}api/post`,
+          `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

@@ -25,7 +25,7 @@ module.exports = {
   // Add this:
   settings: {
     react: {
-      version: "detect",
+      version: "18.3.1",
     },
   },
   plugins: ["react-refresh"],

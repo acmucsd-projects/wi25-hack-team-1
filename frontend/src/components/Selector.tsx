@@ -4,7 +4,6 @@ import { Button } from "baseui/button";
 import { Checkbox, LABEL_PLACEMENT } from "baseui/checkbox";
 import { GoTriangleDown } from "react-icons/go";
 
-
 interface SelectorProps {
   options: string[];
   onFilterChange: (selectedOptions: string[]) => void;
@@ -64,7 +63,6 @@ const Selector: React.FC<SelectorProps> = ({
 
   return (
     <div className={styles.selectorContainer} ref={dropdownRef}>
-      
       <Button
         onClick={toggleDropdown}
         overrides={{
@@ -80,16 +78,13 @@ const Selector: React.FC<SelectorProps> = ({
               display: "flex", // Add flex display
               alignItems: "center", // Vertically center the content
               justifyContent: "space-between", // Distribute space between label and icon
-
             },
           },
         }}
       >
         {getButtonLabel()}
-        <GoTriangleDown color="black" size={17}/> {/* Add the triangle icon */}
-
+        <GoTriangleDown color="black" size={17} /> {/* Add the triangle icon */}
       </Button>
-
 
       {/* Dropdown menu */}
       {isDropdownOpen && (
