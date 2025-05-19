@@ -10,7 +10,16 @@ import {
 } from "react-icons/fa";
 import styles from "./PostCard.module.css";
 
-const PostCard = () => {
+interface PostCardProps {
+  name: string;
+  time: Date;
+  date: Date;
+  location: string;
+  numPeople: number;
+  pfp?: string;
+}
+
+const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
   return (
     <Card
       overrides={{
@@ -34,31 +43,37 @@ const PostCard = () => {
           <div className={styles.iconContainer}>
             <FaUser />
           </div>
-          <span className={styles.nameText}>Maxime</span>
+          <span className={styles.nameText}>{name}</span>
           <FaMars />
+        </div>
+
+        <div className={styles.rowContainer}>
+          <FaCalendarAlt />
+          <span>{date.toDateString()}</span>
         </div>
 
         {/* Time */}
         <div className={styles.rowContainer}>
           <FaClock />
-          <span>12:35</span>
-        </div>
-
-        <div className={styles.rowContainer}>
-          <FaCalendarAlt />
-          <span>Date</span>
+          <span>
+            {time.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </span>
         </div>
 
         {/* Location */}
         <div className={styles.rowContainer}>
           <FaMapMarkerAlt />
-          <span>On-Campus</span>
+          <span>{location}</span>
         </div>
 
         {/* People */}
         <div className={styles.rowContainer}>
           <FaUserFriends />
-          <span>2</span>
+          <span>{numPeople}</span>
         </div>
       </div>
     </Card>

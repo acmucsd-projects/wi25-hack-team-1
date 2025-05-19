@@ -43,7 +43,6 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
         onChange={({ date }) => {
           setDate(Array.isArray(date) ? date : [date]);
         }}
-        displayValueAtRangeIndex={0}
       />
 
       <TimePicker
@@ -55,16 +54,7 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
       />
 
       <Selector
-        options={[
-          "Revelle",
-          "Muir",
-          "Marshall",
-          "Warren",
-          "Roosevelt",
-          "Sixth",
-          "Seventh",
-          "Eighth",
-        ]}
+        options={["On-Campus", "Off-Campus"]}
         onFilterChange={setDeparture} // Pass the callback to handle gender selection
         buttonLabel="Departure"
       />

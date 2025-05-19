@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "baseui": "^0.0.0-next-2113e1821",
+    "clsx": "^2.1.1",
     "firebase": "^11.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
