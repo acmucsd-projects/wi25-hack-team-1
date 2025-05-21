@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "baseui/card";
 import {
   FaUser,
@@ -17,9 +16,19 @@ interface PostCardProps {
   location: string;
   numPeople: number;
   pfp?: string;
+  email: string;
+  isAuthenticated: boolean;
 }
 
-const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
+const PostCard = ({
+  name,
+  time,
+  date,
+  location,
+  numPeople,
+  email,
+  isAuthenticated,
+}: PostCardProps) => {
   return (
     <Card
       overrides={{
@@ -42,7 +51,14 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
           <div className={styles.iconContainer}>
             <FaUser />
           </div>
-          <span className={styles.nameText}>{name}</span>
+          {/* Make name a mailto link if user is signed in */}
+          {isAuthenticated && email ? (
+            <a className={styles.nameText} href={`mailto:${email}`}>
+              {name}
+            </a>
+          ) : (
+            <span className={styles.nameText}>{name}</span>
+          )}
           <FaMars />
         </div>
 

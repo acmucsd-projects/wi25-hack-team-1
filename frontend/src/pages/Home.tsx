@@ -85,7 +85,8 @@ const Home: React.FC = () => {
               time={post.time}
               numPeople={post.numPassengers}
               name={firebaseUser ? `${post.creator.name}` : "Anonymous"}
-              // post.creator ? `${post.creator.name}` : "Unknown"
+              email={post.creator?.email}
+              isAuthenticated={!!firebaseUser}
             />
           ))}
       </div>
