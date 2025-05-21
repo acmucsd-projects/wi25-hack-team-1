@@ -1,15 +1,21 @@
 import Card from "@/components/PostCard";
 import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Post } from "@/types";
+import { UserContext } from "@/contexts/UserContext";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const { firebaseUser } = useContext(UserContext);
 
   const onSubmit = (filters) => {
     console.log("Filters submitted:", filters);
   };
+
+  useEffect(() => {
+    console.log(firebaseUser);
+  }, [firebaseUser]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -48,7 +54,8 @@ const Home: React.FC = () => {
             date={post.flightDay}
             time={post.time}
             numPeople={post.numPassengers}
-            name={post.creator ? `${post.creator.name}` : "Unknown"}
+            name={firebaseUser ? `${post.creator.name}` : "Anonymous"}
+            // post.creator ? `${post.creator.name}` : "Unknown"
           />
         ))}
     </div>
