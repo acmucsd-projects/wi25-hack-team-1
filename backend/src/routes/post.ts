@@ -138,13 +138,47 @@ router.get(
   validateRequest,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
-      const posts = await Post.find()
-        .populate("creator", "name uni email")
+      const { airport, gender, date, sort } = req.query;
+
+      const filters: Record<string, unknown> = {};
+
+      // Airport
+      if (airport) {
+        filters.airport = airport;
+      }
+
+      // Date = exact day (midnight to midnight)
+      if (date) {
+        const start = new Date(date as string);
+        const end = new Date(start);
+        end.setDate(start.getDate() + 1);
+
+        filters.flightDay = {
+          $gte: start,
+          $lt: end,
+        };
+      }
+
+      // Build query
+      let query = Post.find(filters)
+        .populate("creator", "name uni email gender")
         .populate("passengers", "name");
 
+      // Gender filter
+      if (gender) {
+        const genderArray = Array.isArray(gender) ? gender : [gender];
+        query = query.where("creator.gender").in(genderArray);
+      }
+
+      // Time sort
+      if (sort === "asc" || sort === "desc") {
+        query = query.sort({ time: sort === "asc" ? 1 : -1 });
+      }
+
+      const posts = await query.exec();
       res.json(posts);
     } catch (err) {
-      console.error("Error fetching post:", err);
+      console.error("Error fetching filtered posts:", err);
       next(err);
     }
   },
