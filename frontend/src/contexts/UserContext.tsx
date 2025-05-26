@@ -47,7 +47,6 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({
     // the user signs in or out (or when the auth state changes).
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setFirebaseUser(user);
-      console.log("Firebase user:", user);
 
       if (user) {
         try {
