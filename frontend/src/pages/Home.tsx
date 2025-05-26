@@ -2,20 +2,13 @@ import React, { useState, useEffect } from "react";
 import Card from "@/components/PostCard";
 import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
-import PopUp from "@/components/PopUp";
 import { Post } from "@/types";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
 
   const onSubmit = (filters) => {
     console.log("Filters submitted:", filters);
-  };
-
-  const togglePopUp = () => {
-    console.log("Toggle popup called");
-    setIsPopUpOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -46,24 +39,9 @@ const Home: React.FC = () => {
   return (
     <div>
       <FilterBar onSubmit={onSubmit} />
-      {/* Button to open the popup (centered) */}
-      <button
-        onClick={togglePopUp}
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          cursor: "pointer",
-          display: "block",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        Enter Details
-      </button>
 
-      {/* Render the PopUp component with required props */}
-      <PopUp isOpen={isPopUpOpen} togglePopup={togglePopUp} />
       <CreatePostModal />
+
       {posts &&
         posts.map((post, idx) => (
           <Card

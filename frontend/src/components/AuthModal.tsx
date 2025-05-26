@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import { Input } from "baseui/input";
 import { Button } from "baseui/button";
 import { FormControl } from "baseui/form-control";
 import { Card } from "baseui/card";
 import { Block } from "baseui/block";
 import { styled } from "baseui";
+import { UserContext } from "@/contexts/UserContext";
+import { createUser } from "@/api/user";
 
 const genderOptions = [
   { label: "Male", id: "male" },
@@ -58,23 +60,38 @@ const DropdownItem = styled("li", ({ $active }) => ({
   },
 }));
 
-const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
-  isOpen,
-  togglePopup,
-}) => {
+const AuthModal = () => {
+  const { firebaseUser, mongoUser, refreshUser } = useContext(UserContext);
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState(genderOptions[0]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleSubmit = () => {
-    console.log("User Input:", {
-      phoneNumber,
+  const handleSubmit = async () => {
+    if (!firebaseUser) return;
+
+    const userData = {
+      uid: firebaseUser.uid,
+      phone: phoneNumber,
+      uni: "University of California, San Diego",
+      email: firebaseUser.email || "",
+      name: firebaseUser.displayName || "",
+      photoURL: firebaseUser.photoURL || "",
       gender: gender.label,
-    });
-    togglePopup();
+    };
+
+    try {
+      await createUser(await firebaseUser.getIdToken(), userData);
+
+      await refreshUser();
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
 
-  if (!isOpen) return null;
+  if (!firebaseUser || mongoUser) {
+    return;
+  }
 
   return (
     <Overlay>
@@ -95,12 +112,12 @@ const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
           }}
         >
           <Block display="flex" flexDirection="column" gap="20px">
-            <h2 style={{ marginTop: 0 }}>Enter Your Details</h2>
+            <h2 style={{ marginTop: 0 }}>Please complete your profile</h2>
 
             <FormControl label="Phone Number">
               <Input
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber((e.target as any).value)}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 required
               />
             </FormControl>
@@ -141,7 +158,7 @@ const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
             </FormControl>
 
             <Block display="flex" justifyContent="flex-end" gap="10px">
-              <Button type="button" kind="secondary" onClick={togglePopup}>
+              <Button type="button" kind="secondary">
                 Cancel
               </Button>
               <Button type="submit">Submit</Button>
@@ -153,4 +170,4 @@ const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
   );
 };
 
-export default PopUp;
+export default AuthModal;
