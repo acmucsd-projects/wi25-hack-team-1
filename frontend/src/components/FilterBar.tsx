@@ -39,6 +39,8 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
         onChange={({ date }) => {
           setDate(Array.isArray(date) ? date : [date]);
         }}
+        formatString="MM/dd/yyyy"
+        clearable
       />
 
       <Select
@@ -58,6 +60,7 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
             setTimeSort(selected);
           }
         }}
+        clearable={false}
       />
 
       <Select

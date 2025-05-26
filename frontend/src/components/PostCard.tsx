@@ -49,7 +49,7 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
 
         <div className={styles.rowContainer}>
           <FaCalendarAlt />
-          <span>{date.toDateString()}</span>
+          <span>{date.toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
         </div>
 
         {/* Time */}

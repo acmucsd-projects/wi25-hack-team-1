@@ -172,7 +172,10 @@ router.get(
 
       // Time sort
       if (sort === "asc" || sort === "desc") {
-        query = query.sort({ time: sort === "asc" ? 1 : -1 });
+        query = query.sort({
+          flightDay: sort === "asc" ? 1 : -1,
+          time: sort === "asc" ? 1 : -1,
+        });
       }
 
       const posts = await query.exec();
