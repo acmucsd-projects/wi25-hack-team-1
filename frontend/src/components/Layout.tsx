@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import AuthModal from "./AuthModal";
 
 const Layout = () => {
   return (
@@ -7,6 +8,7 @@ const Layout = () => {
       <Navbar />
       <main>
         <Outlet />
+        <AuthModal />
       </main>
     </div>
   );

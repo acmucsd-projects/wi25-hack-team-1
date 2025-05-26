@@ -26,7 +26,6 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
         Root: {
           style: {
             width: "60%",
-            height: "20vh",
             margin: "0 auto",
             padding: "20px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
