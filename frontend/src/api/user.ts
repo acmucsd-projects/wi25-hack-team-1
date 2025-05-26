@@ -10,11 +10,14 @@ export type MongoUser = {
 };
 
 export async function fetchMongoData(token: string): Promise<MongoUser | null> {
-  const res = await fetch("http://localhost:3000/api/user/whoami", {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/user/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 
   if (res.ok) {
     const user: MongoUser = await res.json();
