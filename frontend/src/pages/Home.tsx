@@ -3,9 +3,13 @@ import Card from "@/components/PostCard";
 import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
 import { Post } from "@/types";
+import { Button } from "baseui/button";
+
+import styles from "./Home.module.css";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   const onSubmit = (filters) => {
     console.log("Filters submitted:", filters);
@@ -40,19 +44,43 @@ const Home: React.FC = () => {
     <div>
       <FilterBar onSubmit={onSubmit} />
 
-      <CreatePostModal />
+      <Button
+        onClick={() => setIsPostModalOpen(true)}
+        overrides={{
+          BaseButton: {
+            style: {
+              position: "fixed",
+              bottom: "5rem",
+              right: "5rem",
+              borderRadius: "50%",
+              width: "70px",
+              height: "70px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            },
+          },
+        }}
+      >
+        Post
+      </Button>
 
-      {posts &&
-        posts.map((post, idx) => (
-          <Card
-            key={post._id ?? idx} // fallback to index if _id is null/undefined
-            location={post.airport}
-            date={post.flightDay}
-            time={post.time}
-            numPeople={post.numPassengers}
-            name={post.creator ? `${post.creator.name}` : "Unknown"}
-          />
-        ))}
+      <CreatePostModal
+        isOpen={isPostModalOpen}
+        onClose={() => setIsPostModalOpen(false)}
+      />
+
+      <div className={styles.postsContainer}>
+        {posts &&
+          posts.map((post, idx) => (
+            <Card
+              key={post._id ?? idx} // fallback to index if _id is null/undefined
+              location={post.airport}
+              date={post.flightDay}
+              time={post.time}
+              numPeople={post.numPassengers}
+              name={post.creator ? `${post.creator.name}` : "Unknown"}
+            />
+          ))}
+      </div>
     </div>
   );
 };
