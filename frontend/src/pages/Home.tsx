@@ -21,7 +21,8 @@ const Home: React.FC = () => {
 
       // Destination (only one selection)
       if (filters.destination.length > 0) {
-        query += `airport=${encodeURIComponent(filters.destination[0])}`;
+        const selectedDestination = filters.destination[0]; // Now the ID, like "SAN" or "LAX"
+        query += `airport=${encodeURIComponent(selectedDestination)}`;
       }
 
       // Gender (optional, can be multiple)

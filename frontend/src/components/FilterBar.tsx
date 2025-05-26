@@ -17,7 +17,7 @@ interface FilterBarProps {
 const FilterBar = ({ onSubmit }: FilterBarProps) => {
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
-  >([new Date()]);
+  >(null);
 
   const [destination, setDestination] = React.useState<
     { id: string; label: string }[]
@@ -65,8 +65,8 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
 
       <Select
         options={[
-          { label: "San Diego (SAN)", id: "1" },
-          { label: "Los Angeles (LAX)", id: "2" },
+          { label: "San Diego (SAN)", id: "SAN" },
+          { label: "Los Angeles (LAX)", id: "LAX" },
         ]}
         value={destination}
         placeholder="Destination"
@@ -85,9 +85,7 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
         onClick={() => {
           onSubmit({
             date,
-            destination: destination.map((el) => {
-              return el.label;
-            }),
+            destination: destination.map((el) => el.id),
             gender,
             timeSort,
           });
