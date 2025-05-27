@@ -72,7 +72,7 @@ router.post(
     try {
       const { flightDay, time, airport, luggage, numPassengers } = req.body;
 
-      const user = await User.findById(req.userId);
+      const user = await User.findOne({ uid: req.userId });
 
       if (!user || !["Male", "Female", "Other"].includes(user.gender)) {
         res.status(400).json({ error: "Invalid" }); // 👈 don't return
@@ -80,7 +80,7 @@ router.post(
       }
 
       const post = new Post({
-        creator: req.userId,
+        creator: user._id,
         creatorGender: user.gender,
         flightDay,
         time,
@@ -168,16 +168,16 @@ router.get(
         };
       }
 
+      // Gender filter
+      if (gender) {
+        const genderArray = Array.isArray(gender) ? gender : [gender];
+        filters.creatorGender = { $in: genderArray };
+      }
+
       // Build query
       let query = Post.find(filters)
         .populate("creator", "name uni email gender")
         .populate("passengers", "name");
-
-      // Gender filter
-      if (gender) {
-        const genderArray = Array.isArray(gender) ? gender : [gender];
-        query = query.where("creator.gender").in(genderArray);
-      }
 
       // Time sort
       if (sort === "asc" || sort === "desc") {

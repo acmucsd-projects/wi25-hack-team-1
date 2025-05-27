@@ -145,13 +145,14 @@ const Home: React.FC = () => {
               name={firebaseUser ? `${post.creator.name}` : "Anonymous"}
               email={post.creator?.email}
               isAuthenticated={!!firebaseUser}
-              gender={(post.creator?.gender ?? "Other") as "Male" | "Female" | "Other"}
+              gender={
+                (post.creatorGender ?? "Other") as "Male" | "Female" | "Other"
+              }
             />
           ))}
       </div>
     </div>
   );
-  
 };
 
 export default Home;

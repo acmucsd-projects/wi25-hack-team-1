@@ -20,7 +20,7 @@ const postSchema = new Schema(
       type: String,
       enum: ["Male", "Female", "Other"],
       required: true,
-    }    
+    },
   },
   { timestamps: true },
 );

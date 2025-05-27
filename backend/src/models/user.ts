@@ -7,9 +7,9 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   phone: { type: String, required: true },
   gender: {
-  type: String,
-  enum: ["Male", "Female", "Other"],
-  required: true, 
+    type: String,
+    enum: ["Male", "Female", "Other"],
+    required: true,
   },
   photoURL: { type: String, required: false }, //Google profile picture
 });
