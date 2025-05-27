@@ -10,6 +10,7 @@ export interface Post {
   };
   numPassengers: number;
   passengers: string[];
+  creatorGender: "Male" | "Female" | "Other";
 }
 
 export interface User {

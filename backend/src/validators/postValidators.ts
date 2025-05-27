@@ -27,7 +27,9 @@ export const createPostRules = [
     .withMessage("airport must be a string")
     .trim()
     .notEmpty()
-    .withMessage("airport cannot be empty"),
+    .withMessage("airport cannot be empty")
+    .isIn(["SAN", "LAX"])
+    .withMessage("airport must be either 'SAN' or 'LAX'"),
 
   body("luggage.carryOn")
     .exists()

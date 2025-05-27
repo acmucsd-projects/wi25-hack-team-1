@@ -9,7 +9,7 @@ import {
   SIZE,
   ROLE,
 } from "baseui/modal";
-import { Button, KIND as ButtonKind } from "baseui/button";
+import { KIND as ButtonKind } from "baseui/button";
 import { DatePicker } from "baseui/datepicker";
 import { Select } from "baseui/select";
 import styles from "@/components/CreatePostModal.module.css";
@@ -25,7 +25,12 @@ const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
   const { firebaseUser } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = React.useState(false);
+interface CreatePostModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
+const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
   const [text, setText] = React.useState("");
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
@@ -88,9 +93,12 @@ const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
 
   return (
     <div>
+<<<<<<< HEAD
       <Button onClick={() => setIsOpen(true)}>Post</Button>
+=======
+>>>>>>> main
       <Modal
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         closeable
         isOpen={isOpen}
         animate
@@ -192,6 +200,12 @@ const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
           </div>
         </ModalBody>
         <ModalFooter>
+<<<<<<< HEAD
+=======
+          <ModalButton kind={ButtonKind.tertiary} onClick={onClose}>
+            Cancel
+          </ModalButton>
+>>>>>>> main
           <ModalButton
             kind={ButtonKind.tertiary}
             onClick={() => setIsOpen(false)}
@@ -239,7 +253,12 @@ const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
               setDestination([]);
               setCommunication([]);
               setText("");
+<<<<<<< HEAD
               setIsOpen(false);
+=======
+              // Close the modal
+              onClose();
+>>>>>>> main
             }}
           >
             Post

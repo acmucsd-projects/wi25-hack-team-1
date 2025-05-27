@@ -4,6 +4,7 @@ import { RydeRequest, verifyAuthToken } from "../middleware/auth";
 import { Types } from "mongoose";
 
 import Post from "@/models/post";
+import User from "@/models/user";
 import {
   createPostRules,
   postIdParam,
@@ -80,17 +81,22 @@ router.post(
 
       if (!foundUser) {
         res.status(404).json({ error: "User not found" });
+      const user = await User.findOne({ uid: req.userId });
+
+      if (!user || !["Male", "Female", "Other"].includes(user.gender)) {
+        res.status(400).json({ error: "Invalid" }); // 👈 don't return
         return;
       }
 
       const post = new Post({
-        creator: foundUser._id, // Authenticated user's ID
+        creator: user._id,
+        creatorGender: user.gender,
         flightDay,
         time,
         airport,
         luggage,
         numPassengers,
-        passengers: [], // Start with an empty passengers array
+        passengers: [],
       });
 
       const newPost = await post.save();
@@ -150,13 +156,50 @@ router.get(
   validateRequest,
   async (req: RydeRequest, res: Response, next: NextFunction) => {
     try {
-      const posts = await Post.find()
-        .populate("creator", "name uni email")
+      const { airport, gender, date, sort } = req.query;
+
+      const filters: Record<string, unknown> = {};
+
+      // Airport
+      if (airport) {
+        filters.airport = airport;
+      }
+
+      // Date = exact day (midnight to midnight)
+      if (date) {
+        const start = new Date(date as string);
+        const end = new Date(start);
+        end.setDate(start.getDate() + 1);
+
+        filters.flightDay = {
+          $gte: start,
+          $lt: end,
+        };
+      }
+
+      // Gender filter
+      if (gender) {
+        const genderArray = Array.isArray(gender) ? gender : [gender];
+        filters.creatorGender = { $in: genderArray };
+      }
+
+      // Build query
+      let query = Post.find(filters)
+        .populate("creator", "name uni email gender")
         .populate("passengers", "name");
 
+      // Time sort
+      if (sort === "asc" || sort === "desc") {
+        query = query.sort({
+          flightDay: sort === "asc" ? 1 : -1,
+          time: sort === "asc" ? 1 : -1,
+        });
+      }
+
+      const posts = await query.exec();
       res.json(posts);
     } catch (err) {
-      console.error("Error fetching post:", err);
+      console.error("Error fetching filtered posts:", err);
       next(err);
     }
   },

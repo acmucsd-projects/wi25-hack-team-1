@@ -1,8 +1,9 @@
-import React from "react";
 import { Card } from "baseui/card";
 import {
   FaUser,
   FaMars,
+  FaVenus,
+  FaGenderless,
   FaClock,
   FaMapMarkerAlt,
   FaUserFriends,
@@ -18,17 +19,33 @@ interface PostCardProps {
   date: Date;
   location: string;
   numPeople: number;
+  gender: "Male" | "Female" | "Other";
   pfp?: string;
+  email: string;
+  isAuthenticated: boolean;
 }
 
-const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
+const PostCard = ({
+  name,
+  time,
+  date,
+  location,
+  numPeople,
+  email,
+  gender,
+  isAuthenticated,
+}: PostCardProps) => {
   return (
     <Card
       overrides={{
         Root: {
           style: {
+<<<<<<< HEAD
             width: "70%",
             height: "20vh",
+=======
+            width: "60%",
+>>>>>>> main
             margin: "0 auto",
             padding: "15px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
@@ -45,12 +62,24 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
           <div className={styles.iconContainer}>
             <FaUser />
           </div>
-          <span className={styles.nameText}>{name}</span>
-          <FaMars />
+          {/* Make name a mailto link if user is signed in */}
+          {isAuthenticated && email ? (
+            <a className={styles.nameText} href={`mailto:${email}`}>
+              {name}
+            </a>
+          ) : (
+            <span className={styles.nameText}>{name}</span>
+          )}
+
+          {/* Gender icon */}
+          {gender === "Male" && <FaMars title="Male" />}
+          {gender === "Female" && <FaVenus title="Female" />}
+          {gender === "Other" && <FaGenderless title="Other" />}
         </div>
 
         <div className={styles.rowContainer}>
           <FaCalendarAlt />
+<<<<<<< HEAD
           <span>
             {date.toLocaleDateString("en-US", {
               month: "short",
@@ -58,6 +87,9 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
               year: "numeric",
             })}
           </span>
+=======
+          <span>{date.toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
+>>>>>>> main
         </div>
 
         {/* Time */}

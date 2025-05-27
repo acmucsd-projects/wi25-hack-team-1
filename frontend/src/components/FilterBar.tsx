@@ -3,14 +3,12 @@ import { DatePicker } from "baseui/datepicker";
 import { Select } from "baseui/select";
 import styles from "@/components/FilterBar.module.css";
 import Selector from "@/components/Selector";
-import { TimePicker } from "baseui/timepicker";
 import { Button } from "baseui/button";
 
 interface FilterBarProps {
   onSubmit: (filters: {
     date: Date | Date[] | (Date | null | undefined)[] | null | undefined;
-    time: Date;
-    departure: string[];
+    timeSort: "asc" | "desc";
     destination: string[];
     gender: string[];
   }) => void;
@@ -19,17 +17,15 @@ interface FilterBarProps {
 const FilterBar = ({ onSubmit }: FilterBarProps) => {
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
-  >([new Date()]);
+  >(null);
 
   const [destination, setDestination] = React.useState<
     { id: string; label: string }[]
   >([]);
 
-  const [departure, setDeparture] = React.useState<string[]>([]); // Updated to store selected gender options
-
   const [gender, setGender] = React.useState<string[]>([]); // Updated to store selected gender options
 
-  const [time, setTime] = React.useState(new Date("2025-04-14T20:21:36.050Z"));
+  const [timeSort, setTimeSort] = React.useState<"asc" | "desc">("asc");
 
   const handleGenderChange = (selected: string[]) => {
     setGender(selected); // Update the state with the selected gender options
@@ -43,24 +39,35 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
         onChange={({ date }) => {
           setDate(Array.isArray(date) ? date : [date]);
         }}
-      />
-
-      <TimePicker
-        value={time}
-        onChange={(date) => {
-          if (date) setTime(date);
-        }}
-        minTime={new Date("2025-04-14T07:00:00.000Z")}
-      />
-
-      <Selector
-        options={["On-Campus", "Off-Campus"]}
-        onFilterChange={setDeparture} // Pass the callback to handle gender selection
-        buttonLabel="Departure"
+        formatString="MM/dd/yyyy"
+        clearable
       />
 
       <Select
         options={[
+<<<<<<< HEAD
+=======
+          { label: "Earliest", id: "asc" },
+          { label: "Latest", id: "desc" },
+        ]}
+        value={
+          timeSort === "asc"
+            ? [{ label: "Earliest", id: "asc" }]
+            : [{ label: "Latest", id: "desc" }]
+        }
+        placeholder="Sort by Time"
+        onChange={(params) => {
+          const selected = params.value?.[0]?.id;
+          if (selected === "asc" || selected === "desc") {
+            setTimeSort(selected);
+          }
+        }}
+        clearable={false}
+      />
+
+      <Select
+        options={[
+>>>>>>> main
           { label: "San Diego (SAN)", id: "SAN" },
           { label: "Los Angeles (LAX)", id: "LAX" },
         ]}
@@ -81,12 +88,9 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
         onClick={() => {
           onSubmit({
             date,
-            departure,
-            destination: destination.map((el) => {
-              return el.label;
-            }),
+            destination: destination.map((el) => el.id),
             gender,
-            time,
+            timeSort,
           });
         }}
       >
