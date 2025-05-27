@@ -29,7 +29,7 @@ const Overlay = styled("div", {
 const DropdownContainer = styled("div", {
   position: "relative",
   width: "100%",
-  overflow: "visible", // Ensure dropdown is not clipped
+  overflow: "visible",
 });
 
 const DropdownMenu = styled("ul", {
@@ -83,7 +83,7 @@ const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
           Root: {
             style: {
               width: "400px",
-              overflow: "visible", // Prevent clipping of dropdown
+              overflow: "visible",
             },
           },
         }}
@@ -127,7 +127,7 @@ const PopUp: React.FC<{ isOpen: boolean; togglePopup: () => void }> = ({
                       <DropdownItem
                         key={option.id}
                         $active={option.id === gender.id}
-                        onClick={() => {
+                        onMouseDown={() => {
                           setGender(option);
                           setDropdownOpen(false);
                         }}
