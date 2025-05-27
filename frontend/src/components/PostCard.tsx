@@ -10,8 +10,6 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import styles from "./PostCard.module.css";
-import { MdPadding } from "react-icons/md";
-import { PiAddressBook } from "react-icons/pi";
 
 interface PostCardProps {
   name: string;
@@ -40,12 +38,8 @@ const PostCard = ({
       overrides={{
         Root: {
           style: {
-<<<<<<< HEAD
             width: "70%",
             height: "20vh",
-=======
-            width: "60%",
->>>>>>> main
             margin: "0 auto",
             padding: "15px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
@@ -79,17 +73,7 @@ const PostCard = ({
 
         <div className={styles.rowContainer}>
           <FaCalendarAlt />
-<<<<<<< HEAD
-          <span>
-            {date.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </span>
-=======
           <span>{date.toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
->>>>>>> main
         </div>
 
         {/* Time */}

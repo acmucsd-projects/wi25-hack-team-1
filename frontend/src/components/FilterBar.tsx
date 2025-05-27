@@ -45,8 +45,6 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
 
       <Select
         options={[
-<<<<<<< HEAD
-=======
           { label: "Earliest", id: "asc" },
           { label: "Latest", id: "desc" },
         ]}
@@ -67,7 +65,6 @@ const FilterBar = ({ onSubmit }: FilterBarProps) => {
 
       <Select
         options={[
->>>>>>> main
           { label: "San Diego (SAN)", id: "SAN" },
           { label: "Los Angeles (LAX)", id: "LAX" },
         ]}

@@ -17,20 +17,19 @@ import Selector from "@/components/Selector";
 import { TimePicker } from "baseui/timepicker";
 import { Textarea } from "baseui/textarea";
 import { UserContext } from "@/contexts/UserContext";
+
 interface CreatePostModalProps {
   onPostCreated: () => void;
-}
-
-const CreatePostModal = ({ onPostCreated }: CreatePostModalProps) => {
-  const { firebaseUser } = useContext(UserContext);
-
-  const [isOpen, setIsOpen] = React.useState(false);
-interface CreatePostModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
+const CreatePostModal = ({
+  onPostCreated,
+  isOpen,
+  onClose,
+}: CreatePostModalProps) => {
+  const { firebaseUser } = useContext(UserContext);
   const [text, setText] = React.useState("");
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
@@ -93,10 +92,6 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
 
   return (
     <div>
-<<<<<<< HEAD
-      <Button onClick={() => setIsOpen(true)}>Post</Button>
-=======
->>>>>>> main
       <Modal
         onClose={onClose}
         closeable
@@ -200,16 +195,7 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
           </div>
         </ModalBody>
         <ModalFooter>
-<<<<<<< HEAD
-=======
-          <ModalButton kind={ButtonKind.tertiary} onClick={onClose}>
-            Cancel
-          </ModalButton>
->>>>>>> main
-          <ModalButton
-            kind={ButtonKind.tertiary}
-            onClick={() => setIsOpen(false)}
-          >
+          <ModalButton kind={ButtonKind.tertiary} onClick={() => onClose()}>
             Cancel
           </ModalButton>
           <ModalButton
@@ -253,12 +239,8 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
               setDestination([]);
               setCommunication([]);
               setText("");
-<<<<<<< HEAD
-              setIsOpen(false);
-=======
               // Close the modal
               onClose();
->>>>>>> main
             }}
           >
             Post

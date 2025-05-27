@@ -4,14 +4,10 @@ import FilterBar from "@/components/FilterBar";
 import CreatePostModal from "@/components/CreatePostModal";
 
 import { Post } from "@/types";
-<<<<<<< HEAD
-import styles from "@/pages/Home.module.css";
-=======
 import { Button } from "baseui/button";
 
 import styles from "./Home.module.css";
 import { UserContext } from "@/contexts/UserContext";
->>>>>>> main
 
 const Home: React.FC = () => {
   const { firebaseUser } = useContext(UserContext);
@@ -80,15 +76,6 @@ const Home: React.FC = () => {
     }
   };
 
-<<<<<<< HEAD
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-=======
   useEffect(() => {
     console.log(firebaseUser);
   }, [firebaseUser]);
@@ -113,41 +100,14 @@ const Home: React.FC = () => {
         console.log("Posts fetched:", data);
       } catch (error) {
         console.error("Error fetching posts:", error);
->>>>>>> main
       }
-      const data = (await response.json()) as Post[];
-      setPosts(
-        data.map((post) => ({
-          ...post,
-          flightDay: new Date(post.flightDay),
-          time: new Date(post.time),
-        })),
-      );
-      console.log("Posts fetched:", data);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
-  };
-
-  useEffect(() => {
+    };
     fetchPosts();
-  }, []);
+  });
 
   return (
     <div>
       <FilterBar onSubmit={onSubmit} />
-<<<<<<< HEAD
-      <CreatePostModal
-        onPostCreated={() => {
-          fetchPosts();
-        }}
-      />
-      <div className={styles.cardList}>
-        {posts &&
-          posts.map((post, idx) => (
-            <Card
-              key={post._id ?? idx}
-=======
 
       <Button
         onClick={() => setIsPostModalOpen(true)}
@@ -171,6 +131,9 @@ const Home: React.FC = () => {
       <CreatePostModal
         isOpen={isPostModalOpen}
         onClose={() => setIsPostModalOpen(false)}
+        onPostCreated={function (): void {
+          throw new Error("Function not implemented.");
+        }}
       />
 
       <div className={styles.postsContainer}>
@@ -178,21 +141,16 @@ const Home: React.FC = () => {
           posts.map((post, idx) => (
             <Card
               key={post._id ?? idx} // fallback to index if _id is null/undefined
->>>>>>> main
               location={post.airport}
               date={post.flightDay}
               time={post.time}
               numPeople={post.numPassengers}
-<<<<<<< HEAD
-              name={post.creator ? `${post.creator.name}` : "Unkno`w`n"}
-=======
               name={firebaseUser ? `${post.creator.name}` : "Anonymous"}
               email={post.creator?.email}
               isAuthenticated={!!firebaseUser}
               gender={
                 (post.creatorGender ?? "Other") as "Male" | "Female" | "Other"
               }
->>>>>>> main
             />
           ))}
       </div>
