@@ -11,7 +11,6 @@ import { createUser } from "@/api/user";
 const genderOptions = [
   { label: "Male", id: "male" },
   { label: "Female", id: "female" },
-  { label: "Non-Binary", id: "non-binary" },
   { label: "Other", id: "other" },
 ];
 

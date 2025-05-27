@@ -16,6 +16,11 @@ const postSchema = new Schema(
     luggage: { type: luggageSchema, required: true },
     numPassengers: { type: Number, required: true }, // Total capacity of ride (Seeking this many passengers)
     passengers: [{ type: Types.ObjectId, ref: "User" }], // Array of users in the ride
+    creatorGender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      required: true,
+    },
   },
   { timestamps: true },
 );

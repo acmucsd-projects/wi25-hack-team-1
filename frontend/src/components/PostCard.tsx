@@ -2,6 +2,8 @@ import { Card } from "baseui/card";
 import {
   FaUser,
   FaMars,
+  FaVenus,
+  FaGenderless,
   FaClock,
   FaMapMarkerAlt,
   FaUserFriends,
@@ -15,6 +17,7 @@ interface PostCardProps {
   date: Date;
   location: string;
   numPeople: number;
+  gender: "Male" | "Female" | "Other";
   pfp?: string;
   email: string;
   isAuthenticated: boolean;
@@ -27,6 +30,7 @@ const PostCard = ({
   location,
   numPeople,
   email,
+  gender,
   isAuthenticated,
 }: PostCardProps) => {
   return (
@@ -59,12 +63,16 @@ const PostCard = ({
           ) : (
             <span className={styles.nameText}>{name}</span>
           )}
-          <FaMars />
+
+          {/* Gender icon */}
+          {gender === "Male" && <FaMars title="Male" />}
+          {gender === "Female" && <FaVenus title="Female" />}
+          {gender === "Other" && <FaGenderless title="Other" />}
         </div>
 
         <div className={styles.rowContainer}>
           <FaCalendarAlt />
-          <span>{date.toDateString()}</span>
+          <span>{date.toLocaleDateString("en-US", { timeZone: "UTC" })}</span>
         </div>
 
         {/* Time */}
