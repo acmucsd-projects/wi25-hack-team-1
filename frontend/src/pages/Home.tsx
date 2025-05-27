@@ -110,7 +110,14 @@ const Home: React.FC = () => {
       <FilterBar onSubmit={onSubmit} />
 
       <Button
-        onClick={() => setIsPostModalOpen(true)}
+        onClick={() => {
+          if (!firebaseUser) {
+            alert("Please log in to create a post.");
+            return;
+          }
+
+          setIsPostModalOpen(true);
+        }}
         overrides={{
           BaseButton: {
             style: {
@@ -131,9 +138,6 @@ const Home: React.FC = () => {
       <CreatePostModal
         isOpen={isPostModalOpen}
         onClose={() => setIsPostModalOpen(false)}
-        onPostCreated={function (): void {
-          throw new Error("Function not implemented.");
-        }}
       />
 
       <div className={styles.postsContainer}>

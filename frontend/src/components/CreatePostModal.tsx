@@ -19,16 +19,11 @@ import { Textarea } from "baseui/textarea";
 import { UserContext } from "@/contexts/UserContext";
 
 interface CreatePostModalProps {
-  onPostCreated: () => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CreatePostModal = ({
-  onPostCreated,
-  isOpen,
-  onClose,
-}: CreatePostModalProps) => {
+const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
   const { firebaseUser } = useContext(UserContext);
   const [text, setText] = React.useState("");
   const [date, setDate] = React.useState<
@@ -201,14 +196,6 @@ const CreatePostModal = ({
           <ModalButton
             onClick={async () => {
               if (!validateFields()) return;
-              // Display the information in an alert
-              alert(`Post Details:
-                - Departure Date: ${date}
-                - Departure Time: ${time}
-                - Departure Location: ${departure.join(", ")}
-                - Destination: ${destination.map((d) => d.label).join(", ")}
-                - Communication: ${communication.join(", ")}
-                - Additional Information: ${text}`);
 
               try {
                 const token = await firebaseUser?.getIdToken();
@@ -232,13 +219,14 @@ const CreatePostModal = ({
               } catch (error) {
                 console.error("Error posting data:" + error);
               }
-              onPostCreated();
+
               setDate([new Date()]);
               setTime(new Date("2025-04-14T20:21:36.050Z"));
               setDeparture([]);
               setDestination([]);
               setCommunication([]);
               setText("");
+
               // Close the modal
               onClose();
             }}
