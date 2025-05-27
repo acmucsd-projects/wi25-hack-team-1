@@ -6,7 +6,11 @@ const userSchema = new Schema({
   uni: { type: String, required: true }, // <TODO> Will need to be validated
   email: { type: String, required: true },
   phone: { type: String, required: true },
-  gender: { type: String, required: true },
+  gender: {
+  type: String,
+  enum: ["Male", "Female", "Other"],
+  required: true, 
+  },
   photoURL: { type: String, required: false }, //Google profile picture
 });
 

@@ -106,6 +106,7 @@ const Home: React.FC = () => {
             date={post.flightDay}
             time={post.time}
             numPeople={post.numPassengers}
+            gender={(post.creator?.gender ?? "Other") as "Male" | "Female" | "Other"}
             name={post.creator ? `${post.creator.name}` : "Unknown"}
           />
         ))}

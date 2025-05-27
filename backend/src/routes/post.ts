@@ -4,6 +4,7 @@ import { RydeRequest, verifyAuthToken } from "../middleware/auth";
 import { Types } from "mongoose";
 
 import Post from "@/models/post";
+import User from "@/models/user";
 import {
   createPostRules,
   postIdParam,
@@ -71,14 +72,22 @@ router.post(
     try {
       const { flightDay, time, airport, luggage, numPassengers } = req.body;
 
+      const user = await User.findById(req.userId);
+
+      if (!user || !["Male", "Female", "Other"].includes(user.gender)) {
+        res.status(400).json({ error: "Invalid" }); // 👈 don't return
+        return;
+      }
+
       const post = new Post({
-        creator: req.userId, // Authenticated user's ID
+        creator: req.userId,
+        creatorGender: user.gender,
         flightDay,
         time,
         airport,
         luggage,
         numPassengers,
-        passengers: [], // Start with an empty passengers array
+        passengers: [],
       });
 
       const newPost = await post.save();

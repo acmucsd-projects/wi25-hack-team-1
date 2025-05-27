@@ -3,6 +3,8 @@ import { Card } from "baseui/card";
 import {
   FaUser,
   FaMars,
+  FaVenus,
+  FaGenderless,
   FaClock,
   FaMapMarkerAlt,
   FaUserFriends,
@@ -16,10 +18,11 @@ interface PostCardProps {
   date: Date;
   location: string;
   numPeople: number;
+  gender: "Male" | "Female" | "Other";
   pfp?: string;
 }
 
-const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
+const PostCard = ({ name, time, date, location, gender, numPeople }: PostCardProps) => {
   return (
     <Card
       overrides={{
@@ -44,7 +47,9 @@ const PostCard = ({ name, time, date, location, numPeople }: PostCardProps) => {
             <FaUser />
           </div>
           <span className={styles.nameText}>{name}</span>
-          <FaMars />
+          {gender === "Male" && <FaMars title="Male" />}
+          {gender === "Female" && <FaVenus title="Female" />}
+          {gender === "Other" && <FaGenderless title="Other" />}
         </div>
 
         <div className={styles.rowContainer}>
