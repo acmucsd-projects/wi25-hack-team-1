@@ -8,7 +8,7 @@ import {
   SIZE,
   ROLE,
 } from "baseui/modal";
-import { Button, KIND as ButtonKind } from "baseui/button";
+import { KIND as ButtonKind } from "baseui/button";
 import { DatePicker } from "baseui/datepicker";
 import { Select } from "baseui/select";
 import styles from "@/components/CreatePostModal.module.css";
@@ -16,9 +16,12 @@ import Selector from "@/components/Selector";
 import { TimePicker } from "baseui/timepicker";
 import { Textarea } from "baseui/textarea";
 
-const CreatePostModal = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+interface CreatePostModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
+const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
   const [text, setText] = React.useState("");
 
   const [date, setDate] = React.useState<
@@ -37,10 +40,8 @@ const CreatePostModal = () => {
 
   return (
     <div>
-      <Button onClick={() => setIsOpen(true)}>Post</Button>
-
       <Modal
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         closeable
         isOpen={isOpen}
         animate
@@ -150,7 +151,9 @@ const CreatePostModal = () => {
           </div>
         </ModalBody>
         <ModalFooter>
-          <ModalButton kind={ButtonKind.tertiary}>Cancel</ModalButton>
+          <ModalButton kind={ButtonKind.tertiary} onClick={onClose}>
+            Cancel
+          </ModalButton>
           <ModalButton
             onClick={() => {
               // Display the information in an alert
@@ -170,7 +173,7 @@ const CreatePostModal = () => {
               setCommunication([]);
               setText("");
               // Close the modal
-              setIsOpen(false);
+              onClose();
             }}
           >
             Post

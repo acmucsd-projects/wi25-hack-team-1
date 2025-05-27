@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "baseui/card";
 import {
   FaUser,
@@ -20,16 +19,26 @@ interface PostCardProps {
   numPeople: number;
   gender: "Male" | "Female" | "Other";
   pfp?: string;
+  email: string;
+  isAuthenticated: boolean;
 }
 
-const PostCard = ({ name, time, date, location, gender, numPeople }: PostCardProps) => {
+const PostCard = ({
+  name,
+  time,
+  date,
+  location,
+  numPeople,
+  email,
+  gender,
+  isAuthenticated,
+}: PostCardProps) => {
   return (
     <Card
       overrides={{
         Root: {
           style: {
             width: "60%",
-            height: "20vh",
             margin: "0 auto",
             padding: "20px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
@@ -46,7 +55,16 @@ const PostCard = ({ name, time, date, location, gender, numPeople }: PostCardPro
           <div className={styles.iconContainer}>
             <FaUser />
           </div>
-          <span className={styles.nameText}>{name}</span>
+          {/* Make name a mailto link if user is signed in */}
+          {isAuthenticated && email ? (
+            <a className={styles.nameText} href={`mailto:${email}`}>
+              {name}
+            </a>
+          ) : (
+            <span className={styles.nameText}>{name}</span>
+          )}
+
+          {/* Gender icon */}
           {gender === "Male" && <FaMars title="Male" />}
           {gender === "Female" && <FaVenus title="Female" />}
           {gender === "Other" && <FaGenderless title="Other" />}
