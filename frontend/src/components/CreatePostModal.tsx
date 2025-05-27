@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import {
   Modal,
   ModalHeader,
@@ -15,6 +16,7 @@ import styles from "@/components/CreatePostModal.module.css";
 import Selector from "@/components/Selector";
 import { TimePicker } from "baseui/timepicker";
 import { Textarea } from "baseui/textarea";
+import { UserContext } from "@/contexts/UserContext";
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -22,21 +24,66 @@ interface CreatePostModalProps {
 }
 
 const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
+  const { firebaseUser } = useContext(UserContext);
   const [text, setText] = React.useState("");
-
   const [date, setDate] = React.useState<
     Date | Date[] | (Date | null | undefined)[] | null | undefined
   >([new Date()]);
-
   const [destination, setDestination] = React.useState<
     { id: string; label: string }[]
   >([]);
-
-  const [departure, setDeparture] = React.useState<string[]>([]); // Updated to store selected gender options
-
-  const [communication, setCommunication] = React.useState<string[]>([]); // Updated to store selected gender options
-
+  const [departure, setDeparture] = React.useState<string[]>([]);
+  const [communication, setCommunication] = React.useState<string[]>([]);
   const [time, setTime] = React.useState(new Date("2025-04-14T00:00:00.0000"));
+
+  // Error states for each field
+  const [dateError, setDateError] = React.useState(false);
+  const [destinationError, setDestinationError] = React.useState(false);
+  const [departureError, setDepartureError] = React.useState(false);
+  const [communicationError, setCommunicationError] = React.useState(false);
+  const [timeError, setTimeError] = React.useState(false);
+
+  const validateFields = () => {
+    let valid = true;
+
+    // Example validation logic, adjust as needed
+    if (!date || (Array.isArray(date) && date.length === 0)) {
+      setDateError(true);
+      valid = false;
+    } else {
+      setDateError(false);
+    }
+
+    if (!destination || destination.length === 0) {
+      setDestinationError(true);
+      valid = false;
+    } else {
+      setDestinationError(false);
+    }
+
+    if (!departure || departure.length === 0) {
+      setDepartureError(true);
+      valid = false;
+    } else {
+      setDepartureError(false);
+    }
+
+    if (!communication || communication.length === 0) {
+      setCommunicationError(true);
+      valid = false;
+    } else {
+      setCommunicationError(false);
+    }
+
+    if (!time) {
+      setTimeError(true);
+      valid = false;
+    } else {
+      setTimeError(false);
+    }
+
+    return valid;
+  };
 
   return (
     <div>
@@ -66,10 +113,10 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
                     onChange={({ date }) => {
                       setDate(Array.isArray(date) ? date : [date]);
                     }}
+                    error={dateError}
                   />
                 </div>
               </div>
-
               <div className={styles.verticalContainer}>
                 <div className={styles.titleCombo}>
                   <p>Departure Time</p>
@@ -79,28 +126,20 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
                       if (date) setTime(date);
                     }}
                     minTime={new Date("2025-04-14T07:00:00.000Z")}
+                    error={timeError}
                   />
                 </div>
               </div>
             </div>
-
             <div className={styles.horizontalContainer}>
               <div className={styles.verticalContainer}>
                 <div className={styles.titleCombo}>
                   <p>Departure Location</p>
                   <Selector
-                    options={[
-                      "Revelle",
-                      "Muir",
-                      "Marshall",
-                      "Warren",
-                      "Roosevelt",
-                      "Sixth",
-                      "Seventh",
-                      "Eighth",
-                    ]}
-                    onFilterChange={setDeparture} // Pass the callback to handle gender selection
+                    options={["On-Campus", "Off-Campus"]}
+                    onFilterChange={setDeparture}
                     buttonLabel="Departure"
+                    error={departureError}
                   />
                 </div>
               </div>
@@ -109,8 +148,8 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
                   <p>Destination</p>
                   <Select
                     options={[
-                      { label: "San Diego (SAN)", id: "1" },
-                      { label: "Los Angeles (LAX)", id: "2" },
+                      { label: "San Diego (SAN)", id: "SAN" },
+                      { label: "Los Angeles (LAX)", id: "LAX" },
                     ]}
                     value={destination}
                     placeholder="Destination"
@@ -119,24 +158,24 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
                         params.value as { id: string; label: string }[],
                       )
                     }
+                    error={destinationError}
                   />
                 </div>
               </div>
             </div>
-
             <div className={styles.horizontalContainer}>
               <div className={styles.verticalContainer}>
                 <div className={styles.titleCombo}>
                   <p>Select form of communication</p>
                   <Selector
                     options={["Email", "Phone"]}
-                    onFilterChange={setCommunication} // Pass the callback to handle gender selection
+                    onFilterChange={setCommunication}
                     buttonLabel="Communication"
+                    error={communicationError}
                   />
                 </div>
               </div>
             </div>
-
             <div className={styles.horizontalContainer}>
               <div className={styles.titleCombo}>
                 <p>Additional Information</p>
@@ -151,27 +190,43 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
           </div>
         </ModalBody>
         <ModalFooter>
-          <ModalButton kind={ButtonKind.tertiary} onClick={onClose}>
+          <ModalButton kind={ButtonKind.tertiary} onClick={() => onClose()}>
             Cancel
           </ModalButton>
           <ModalButton
-            onClick={() => {
-              // Display the information in an alert
-              alert(`Post Details:
-                - Departure Date: ${date}
-                - Departure Time: ${time}
-                - Departure Location: ${departure.join(", ")}
-                - Destination: ${destination.map((d) => d.label).join(", ")}
-                - Communication: ${communication.join(", ")}
-                - Additional Information: ${text}`);
+            onClick={async () => {
+              if (!validateFields()) return;
 
-              // Clear all fields
+              try {
+                const token = await firebaseUser?.getIdToken();
+                await fetch(
+                  `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/post`,
+                  {
+                    method: "POST",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      flightDay: (date as Date[])[0].toISOString(),
+                      time: time.toISOString(),
+                      airport: destination[0].id,
+                      luggage: { carryOn: 1, checked: 1 },
+                      numPassengers: 1,
+                    }),
+                  },
+                );
+              } catch (error) {
+                console.error("Error posting data:" + error);
+              }
+
               setDate([new Date()]);
               setTime(new Date("2025-04-14T20:21:36.050Z"));
               setDeparture([]);
               setDestination([]);
               setCommunication([]);
               setText("");
+
               // Close the modal
               onClose();
             }}

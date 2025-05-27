@@ -103,14 +103,21 @@ const Home: React.FC = () => {
       }
     };
     fetchPosts();
-  }, []);
+  });
 
   return (
     <div>
       <FilterBar onSubmit={onSubmit} />
 
       <Button
-        onClick={() => setIsPostModalOpen(true)}
+        onClick={() => {
+          if (!firebaseUser) {
+            alert("Please log in to create a post.");
+            return;
+          }
+
+          setIsPostModalOpen(true);
+        }}
         overrides={{
           BaseButton: {
             style: {

@@ -38,9 +38,10 @@ const PostCard = ({
       overrides={{
         Root: {
           style: {
-            width: "60%",
+            width: "70%",
+            height: "20vh",
             margin: "0 auto",
-            padding: "20px",
+            padding: "15px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
             borderRadius: "12px",
             backgroundColor: "#fff",
