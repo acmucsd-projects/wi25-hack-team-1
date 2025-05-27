@@ -103,7 +103,7 @@ const Home: React.FC = () => {
       }
     };
     fetchPosts();
-  });
+  }, []);
 
   return (
     <div>
